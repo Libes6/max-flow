@@ -1,0 +1,118 @@
+{
+  "settings": {
+    "title": "Налаштування",
+    "app": "Додаток",
+    "data": "Дані",
+    "about": "Про додаток",
+    "notifications": "Сповіщення",
+    "notificationsSubtitle": "Налаштування нагадувань",
+    "theme": "Тема",
+    "themeSubtitle": "Темна тема",
+    "language": "Мова",
+    "languageSubtitle": "Українська",
+    "exportData": "Експорт даних",
+    "exportDataSubtitle": "Зберегти звички",
+    "importData": "Імпорт даних",
+    "importDataSubtitle": "Завантажити звички",
+    "clearData": "Очистити дані",
+    "clearDataSubtitle": "Видалити всі звички",
+    "version": "Версія",
+    "versionSubtitle": "1.0.0",
+    "privacy": "Політика конфіденційності",
+    "terms": "Умови використання"
+  },
+  "languages": {
+    "ru": "Русский",
+    "en": "English",
+    "uk": "Українська",
+    "kk": "Қазақша"
+  },
+  "habits": {
+    "morningExercise": "Ранкова зарядка",
+    "morningExerciseDesc": "15 хвилин вправ",
+    "reading": "Читання",
+    "readingDesc": "30 хвилин на день",
+    "health": "Здоров'я",
+    "learning": "Навчання",
+    "general": "Загальне"
+  },
+  "common": {
+    "save": "Зберегти",
+    "cancel": "Скасувати",
+    "ok": "ОК",
+    "close": "Закрити",
+    "select": "Вибрати"
+  },
+  "navigation": {
+    "today": "Сьогодні",
+    "habits": "Звички",
+    "history": "Історія",
+    "statistics": "Статистика",
+    "settings": "Налаштування"
+  },
+  "today": {
+    "title": "Сьогодні",
+    "addHabit": "Додати звичку",
+    "noHabits": "Немає активних звичок",
+    "noHabitsSubtitle": "Додайте першу звичку, щоб почати відстеження",
+    "completed": "Виконано",
+    "inProgress": "В процесі",
+    "streak": "серія",
+    "days": "днів"
+  },
+  "history": {
+    "title": "Історія",
+    "month": "Місяць",
+    "noEntries": "Немає записів",
+    "noEntriesSubtitle": "Записи з'являться після виконання звичок",
+    "filterByHabit": "Фільтр за звичкою",
+    "allHabits": "Всі звички",
+    "deleteEntry": "Видалити запис",
+    "deleteEntryConfirm": "Ви впевнені, що хочете видалити цей запис?"
+  },
+  "statistics": {
+    "title": "Статистика",
+    "overview": "Огляд",
+    "thisWeek": "На цьому тижні",
+    "thisMonth": "У цьому місяці",
+    "totalHabits": "Всього звичок",
+    "completedToday": "Виконано сьогодні",
+    "completionRate": "Відсоток виконання",
+    "streak": "Найкраща серія",
+    "averagePerDay": "В середньому на день",
+    "mostProductiveDay": "Найпродуктивніший день",
+    "leastProductiveDay": "Менш продуктивний день"
+  },
+  "months": {
+    "january": "Січень",
+    "february": "Лютий",
+    "march": "Березень",
+    "april": "Квітень",
+    "may": "Травень",
+    "june": "Червень",
+    "july": "Липень",
+    "august": "Серпень",
+    "september": "Вересень",
+    "october": "Жовтень",
+    "november": "Листопад",
+    "december": "Грудень"
+  },
+  "weekdays": {
+    "monday": "Понеділок",
+    "tuesday": "Вівторок",
+    "wednesday": "Середа",
+    "thursday": "Четвер",
+    "friday": "П'ятниця",
+    "saturday": "Субота",
+    "sunday": "Неділя"
+  },
+  "weekdaysShort": {
+    "monday": "Пн",
+    "tuesday": "Вт",
+    "wednesday": "Ср",
+    "thursday": "Чт",
+    "friday": "Пт",
+    "saturday": "Сб",
+    "sunday": "Нд"
+  }
+}

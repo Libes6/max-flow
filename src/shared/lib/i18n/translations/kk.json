@@ -1,0 +1,118 @@
+{
+  "settings": {
+    "title": "Баптаулар",
+    "app": "Қолданба",
+    "data": "Деректер",
+    "about": "Қолданба туралы",
+    "notifications": "Хабарландырулар",
+    "notificationsSubtitle": "Еске салу баптаулары",
+    "theme": "Тема",
+    "themeSubtitle": "Қараңғы тема",
+    "language": "Тіл",
+    "languageSubtitle": "Қазақша",
+    "exportData": "Деректерді экспорттау",
+    "exportDataSubtitle": "Дағдыларды сақтау",
+    "importData": "Деректерді импорттау",
+    "importDataSubtitle": "Дағдыларды жүктеу",
+    "clearData": "Деректерді тазалау",
+    "clearDataSubtitle": "Барлық дағдыларды жою",
+    "version": "Нұсқа",
+    "versionSubtitle": "1.0.0",
+    "privacy": "Құпиялылық саясаты",
+    "terms": "Пайдалану шарттары"
+  },
+  "languages": {
+    "ru": "Русский",
+    "en": "English",
+    "uk": "Українська",
+    "kk": "Қазақша"
+  },
+  "habits": {
+    "morningExercise": "Таңғы жаттығу",
+    "morningExerciseDesc": "15 минут жаттығу",
+    "reading": "Оқу",
+    "readingDesc": "Күніне 30 минут",
+    "health": "Денсаулық",
+    "learning": "Оқу",
+    "general": "Жалпы"
+  },
+  "common": {
+    "save": "Сақтау",
+    "cancel": "Болдырмау",
+    "ok": "ОК",
+    "close": "Жабу",
+    "select": "Таңдау"
+  },
+  "navigation": {
+    "today": "Бүгін",
+    "habits": "Дағдылар",
+    "history": "Тарих",
+    "statistics": "Статистика",
+    "settings": "Баптаулар"
+  },
+  "today": {
+    "title": "Бүгін",
+    "addHabit": "Дағды қосу",
+    "noHabits": "Белсенді дағдылар жоқ",
+    "noHabitsSubtitle": "Бақылауды бастау үшін алғашқы дағдыңызды қосыңыз",
+    "completed": "Аяқталды",
+    "inProgress": "Процесте",
+    "streak": "серия",
+    "days": "күн"
+  },
+  "history": {
+    "title": "Тарих",
+    "month": "Ай",
+    "noEntries": "Жазбалар жоқ",
+    "noEntriesSubtitle": "Жазбалар дағдыларды аяқтағаннан кейін пайда болады",
+    "filterByHabit": "Дағды бойынша сүзгі",
+    "allHabits": "Барлық дағдылар",
+    "deleteEntry": "Жазбаны жою",
+    "deleteEntryConfirm": "Бұл жазбаны жоюға сенімдісіз бе?"
+  },
+  "statistics": {
+    "title": "Статистика",
+    "overview": "Шолу",
+    "thisWeek": "Осы аптада",
+    "thisMonth": "Осы айда",
+    "totalHabits": "Жалпы дағдылар",
+    "completedToday": "Бүгін аяқталды",
+    "completionRate": "Аяқтау пайызы",
+    "streak": "Ең жақсы серия",
+    "averagePerDay": "Күніне орташа",
+    "mostProductiveDay": "Ең өнімді күн",
+    "leastProductiveDay": "Аз өнімді күн"
+  },
+  "months": {
+    "january": "Қаңтар",
+    "february": "Ақпан",
+    "march": "Наурыз",
+    "april": "Сәуір",
+    "may": "Мамыр",
+    "june": "Маусым",
+    "july": "Шілде",
+    "august": "Тамыз",
+    "september": "Қыркүйек",
+    "october": "Қазан",
+    "november": "Қараша",
+    "december": "Желтоқсан"
+  },
+  "weekdays": {
+    "monday": "Дүйсенбі",
+    "tuesday": "Сейсенбі",
+    "wednesday": "Сәрсенбі",
+    "thursday": "Бейсенбі",
+    "friday": "Жұма",
+    "saturday": "Сенбі",
+    "sunday": "Жексенбі"
+  },
+  "weekdaysShort": {
+    "monday": "Дс",
+    "tuesday": "Сс",
+    "wednesday": "Ср",
+    "thursday": "Бс",
+    "friday": "Жм",
+    "saturday": "Сн",
+    "sunday": "Жк"
+  }
+}

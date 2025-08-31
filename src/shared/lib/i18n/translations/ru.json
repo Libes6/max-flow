@@ -1,0 +1,118 @@
+{
+  "settings": {
+    "title": "Настройки",
+    "app": "Приложение",
+    "data": "Данные",
+    "about": "О приложении",
+    "notifications": "Уведомления",
+    "notificationsSubtitle": "Настройка напоминаний",
+    "theme": "Тема",
+    "themeSubtitle": "Темная тема",
+    "language": "Язык",
+    "languageSubtitle": "Русский",
+    "exportData": "Экспорт данных",
+    "exportDataSubtitle": "Сохранить привычки",
+    "importData": "Импорт данных",
+    "importDataSubtitle": "Загрузить привычки",
+    "clearData": "Очистить данные",
+    "clearDataSubtitle": "Удалить все привычки",
+    "version": "Версия",
+    "versionSubtitle": "1.0.0",
+    "privacy": "Политика конфиденциальности",
+    "terms": "Условия использования"
+  },
+  "languages": {
+    "ru": "Русский",
+    "en": "English",
+    "uk": "Українська",
+    "kk": "Қазақша"
+  },
+  "habits": {
+    "morningExercise": "Утренняя зарядка",
+    "morningExerciseDesc": "15 минут упражнений",
+    "reading": "Чтение",
+    "readingDesc": "30 минут в день",
+    "health": "Здоровье",
+    "learning": "Обучение",
+    "general": "Общее"
+  },
+  "common": {
+    "save": "Сохранить",
+    "cancel": "Отмена",
+    "ok": "ОК",
+    "close": "Закрыть",
+    "select": "Выбрать"
+  },
+  "navigation": {
+    "today": "Сегодня",
+    "habits": "Привычки",
+    "history": "История",
+    "statistics": "Статистика",
+    "settings": "Настройки"
+  },
+  "today": {
+    "title": "Сегодня",
+    "addHabit": "Добавить привычку",
+    "noHabits": "Нет активных привычек",
+    "noHabitsSubtitle": "Добавьте первую привычку, чтобы начать отслеживание",
+    "completed": "Выполнено",
+    "inProgress": "В процессе",
+    "streak": "серия",
+    "days": "дней"
+  },
+  "history": {
+    "title": "История",
+    "month": "Месяц",
+    "noEntries": "Нет записей",
+    "noEntriesSubtitle": "Записи появятся после выполнения привычек",
+    "filterByHabit": "Фильтр по привычке",
+    "allHabits": "Все привычки",
+    "deleteEntry": "Удалить запись",
+    "deleteEntryConfirm": "Вы уверены, что хотите удалить эту запись?"
+  },
+  "statistics": {
+    "title": "Статистика",
+    "overview": "Обзор",
+    "thisWeek": "На этой неделе",
+    "thisMonth": "В этом месяце",
+    "totalHabits": "Всего привычек",
+    "completedToday": "Выполнено сегодня",
+    "completionRate": "Процент выполнения",
+    "streak": "Лучшая серия",
+    "averagePerDay": "В среднем в день",
+    "mostProductiveDay": "Самый продуктивный день",
+    "leastProductiveDay": "Менее продуктивный день"
+  },
+  "months": {
+    "january": "Январь",
+    "february": "Февраль",
+    "march": "Март",
+    "april": "Апрель",
+    "may": "Май",
+    "june": "Июнь",
+    "july": "Июль",
+    "august": "Август",
+    "september": "Сентябрь",
+    "october": "Октябрь",
+    "november": "Ноябрь",
+    "december": "Декабрь"
+  },
+  "weekdays": {
+    "monday": "Понедельник",
+    "tuesday": "Вторник",
+    "wednesday": "Среда",
+    "thursday": "Четверг",
+    "friday": "Пятница",
+    "saturday": "Суббота",
+    "sunday": "Воскресенье"
+  },
+  "weekdaysShort": {
+    "monday": "Пн",
+    "tuesday": "Вт",
+    "wednesday": "Ср",
+    "thursday": "Чт",
+    "friday": "Пт",
+    "saturday": "Сб",
+    "sunday": "Вс"
+  }
+}

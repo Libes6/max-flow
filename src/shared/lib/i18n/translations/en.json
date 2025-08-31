@@ -1,0 +1,118 @@
+{
+  "settings": {
+    "title": "Settings",
+    "app": "Application",
+    "data": "Data",
+    "about": "About",
+    "notifications": "Notifications",
+    "notificationsSubtitle": "Reminder settings",
+    "theme": "Theme",
+    "themeSubtitle": "Dark theme",
+    "language": "Language",
+    "languageSubtitle": "English",
+    "exportData": "Export data",
+    "exportDataSubtitle": "Save habits",
+    "importData": "Import data",
+    "importDataSubtitle": "Load habits",
+    "clearData": "Clear data",
+    "clearDataSubtitle": "Delete all habits",
+    "version": "Version",
+    "versionSubtitle": "1.0.0",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Use"
+  },
+  "languages": {
+    "ru": "Русский",
+    "en": "English",
+    "uk": "Українська",
+    "kk": "Қазақша"
+  },
+  "habits": {
+    "morningExercise": "Morning Exercise",
+    "morningExerciseDesc": "15 minutes of exercises",
+    "reading": "Reading",
+    "readingDesc": "30 minutes a day",
+    "health": "Health",
+    "learning": "Learning",
+    "general": "General"
+  },
+  "common": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "ok": "OK",
+    "close": "Close",
+    "select": "Select"
+  },
+  "navigation": {
+    "today": "Today",
+    "habits": "Habits",
+    "history": "History",
+    "statistics": "Statistics",
+    "settings": "Settings"
+  },
+  "today": {
+    "title": "Today",
+    "addHabit": "Add habit",
+    "noHabits": "No active habits",
+    "noHabitsSubtitle": "Add your first habit to start tracking",
+    "completed": "Completed",
+    "inProgress": "In progress",
+    "streak": "streak",
+    "days": "days"
+  },
+  "history": {
+    "title": "History",
+    "month": "Month",
+    "noEntries": "No entries",
+    "noEntriesSubtitle": "Entries will appear after completing habits",
+    "filterByHabit": "Filter by habit",
+    "allHabits": "All habits",
+    "deleteEntry": "Delete entry",
+    "deleteEntryConfirm": "Are you sure you want to delete this entry?"
+  },
+  "statistics": {
+    "title": "Statistics",
+    "overview": "Overview",
+    "thisWeek": "This week",
+    "thisMonth": "This month",
+    "totalHabits": "Total habits",
+    "completedToday": "Completed today",
+    "completionRate": "Completion rate",
+    "streak": "Best streak",
+    "averagePerDay": "Average per day",
+    "mostProductiveDay": "Most productive day",
+    "leastProductiveDay": "Least productive day"
+  },
+  "months": {
+    "january": "January",
+    "february": "February",
+    "march": "March",
+    "april": "April",
+    "may": "May",
+    "june": "June",
+    "july": "July",
+    "august": "August",
+    "september": "September",
+    "october": "October",
+    "november": "November",
+    "december": "December"
+  },
+  "weekdays": {
+    "monday": "Monday",
+    "tuesday": "Tuesday",
+    "wednesday": "Wednesday",
+    "thursday": "Thursday",
+    "friday": "Friday",
+    "saturday": "Saturday",
+    "sunday": "Sunday"
+  },
+  "weekdaysShort": {
+    "monday": "Mon",
+    "tuesday": "Tue",
+    "wednesday": "Wed",
+    "thursday": "Thu",
+    "friday": "Fri",
+    "saturday": "Sat",
+    "sunday": "Sun"
+  }
+}
