@@ -120,5 +120,17 @@
     "friday": "Пт",
     "saturday": "Сб",
     "sunday": "Вс"
+  },
+  "calendar": {
+    "week": "Неделя",
+    "month": "Месяц",
+    "today": "Сегодня",
+    "tomorrow": "Завтра",
+    "overdue": "Просрочено",
+    "reschedule": "Перенести",
+    "showWeek": "Показать неделю",
+    "showMonth": "Показать месяц",
+    "dragUpForMonth": "Потяните вверх для месяца",
+    "dragDownForWeek": "Потяните вниз для недели"
   }
 }

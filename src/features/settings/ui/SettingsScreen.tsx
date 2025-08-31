@@ -13,6 +13,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useTheme, spacing, typography, dimensions } from '../../../shared/theme';
 import { LanguageSelector } from './LanguageSelector';
 import { ThemeSelector } from './ThemeSelector';
+import { SupabaseTestButton } from './SupabaseTestButton';
 
 const SettingItem: React.FC<{
   title: string;
@@ -44,11 +45,7 @@ export const SettingsScreen: React.FC = () => {
     {
       sectionTitle: t('settings.app'),
       items: [
-        {
-          title: t('settings.notifications'),
-          subtitle: t('settings.notificationsSubtitle'),
-          icon: 'notifications-outline',
-        },
+
         {
           title: t('settings.theme'),
           subtitle: t('settings.themeSubtitle'),
@@ -56,42 +53,42 @@ export const SettingsScreen: React.FC = () => {
         },
       ],
     },
-    {
-      sectionTitle: t('settings.data'),
-      items: [
-        {
-          title: t('settings.exportData'),
-          subtitle: t('settings.exportDataSubtitle'),
-          icon: 'download-outline',
-        },
-        {
-          title: t('settings.importData'),
-          subtitle: t('settings.importDataSubtitle'),
-          icon: 'cloud-upload-outline',
-        },
-        {
-          title: t('settings.clearData'),
-          subtitle: t('settings.clearDataSubtitle'),
-          icon: 'trash-outline',
-        },
-      ],
-    },
+    // {
+    //   sectionTitle: t('settings.data'),
+    //   items: [
+    //     {
+    //       title: t('settings.exportData'),
+    //       subtitle: t('settings.exportDataSubtitle'),
+    //       icon: 'download-outline',
+    //     },
+    //     {
+    //       title: t('settings.importData'),
+    //       subtitle: t('settings.importDataSubtitle'),
+    //       icon: 'cloud-upload-outline',
+    //     },
+    //     {
+    //       title: t('settings.clearData'),
+    //       subtitle: t('settings.clearDataSubtitle'),
+    //       icon: 'trash-outline',
+    //     },
+    //   ],
+    // },
     {
       sectionTitle: t('settings.about'),
       items: [
         {
           title: t('settings.version'),
-          subtitle: t('settings.versionSubtitle'),
+          subtitle: '0.0.1',
           icon: 'information-circle-outline',
         },
-        {
-          title: t('settings.privacy'),
-          icon: 'shield-outline',
-        },
-        {
-          title: t('settings.terms'),
-          icon: 'document-text-outline',
-        },
+        // {
+        //   title: t('settings.privacy'),
+        //   icon: 'shield-outline',
+        // },
+        // {
+        //   title: t('settings.terms'),
+        //   icon: 'document-text-outline',
+        // },
       ],
     },
   ];
@@ -121,13 +118,14 @@ export const SettingsScreen: React.FC = () => {
           />
         );
       })}
-      {/* Добавляем селекторы после первой секции */}
-      {item.sectionTitle === t('settings.app') && (
-        <>
-          <LanguageSelector />
-          <ThemeSelector />
-        </>
-      )}
+                  {/* Добавляем селекторы после первой секции */}
+            {item.sectionTitle === t('settings.app') && (
+              <>
+                <LanguageSelector />
+                <ThemeSelector />
+                <SupabaseTestButton />
+              </>
+            )}
     </View>
   );
 

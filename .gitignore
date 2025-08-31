@@ -98,6 +98,16 @@ logs
 *.log
 
 # Runtime data
+
+# Environment variables
+.env
+.env.local
+.env.production
+.env.staging
+.env.*.local
+
+# Но оставьте пример
+!.env.example
 pids
 *.pid
 *.seed

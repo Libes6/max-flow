@@ -120,5 +120,17 @@
     "friday": "Fri",
     "saturday": "Sat",
     "sunday": "Sun"
+  },
+  "calendar": {
+    "week": "Week",
+    "month": "Month",
+    "today": "Today",
+    "tomorrow": "Tomorrow",
+    "overdue": "Overdue",
+    "reschedule": "Reschedule",
+    "showWeek": "Show Week",
+    "showMonth": "Show Month",
+    "dragUpForMonth": "Drag up for month view",
+    "dragDownForWeek": "Drag down for week view"
   }
 }

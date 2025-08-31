@@ -88,7 +88,7 @@ export const StatisticsScreen: React.FC = () => {
   const { t } = useTranslation();
   const { colors } = useTheme();
   const habits = useHabitsStore((s) => s.habits);
-  const { getOverallStats, getHabitStats, addTestData } = useStatisticsStore();
+  const { getOverallStats, getHabitStats } = useStatisticsStore();
   
   const overallStats = getOverallStats();
   const habitStats = habits.map(habit => ({
@@ -101,12 +101,6 @@ export const StatisticsScreen: React.FC = () => {
       <View style={styles.header}>
         <Text style={[styles.title, { color: colors.text }]}>{t('statistics.title')}</Text>
         <Text style={[styles.subtitle, { color: colors.textSecondary }]}>{t('statistics.overview')}</Text>
-        <TouchableOpacity 
-          style={[styles.testDataButton, { backgroundColor: colors.primary }]}
-          onPress={addTestData}
-        >
-          <Text style={[styles.testDataButtonText, { color: colors.text }]}>Добавить тестовые данные</Text>
-        </TouchableOpacity>
       </View>
       
       <FlatList
@@ -298,15 +292,5 @@ const styles = StyleSheet.create({
     ...typography.bodySmall,
     textAlign: 'center',
   },
-  testDataButton: {
-    paddingHorizontal: spacing.md,
-    paddingVertical: spacing.sm,
-    borderRadius: 8,
-    marginTop: spacing.sm,
-    alignSelf: 'flex-start',
-  },
-  testDataButtonText: {
-    ...typography.bodySmall,
-    fontWeight: '500',
-  },
+
 });

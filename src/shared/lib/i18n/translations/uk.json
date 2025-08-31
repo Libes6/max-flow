@@ -120,5 +120,17 @@
     "friday": "Пт",
     "saturday": "Сб",
     "sunday": "Нд"
+  },
+  "calendar": {
+    "week": "Тиждень",
+    "month": "Місяць",
+    "today": "Сьогодні",
+    "tomorrow": "Завтра",
+    "overdue": "Протерміновано",
+    "reschedule": "Перенести",
+    "showWeek": "Показати тиждень",
+    "showMonth": "Показати місяць",
+    "dragUpForMonth": "Потягніть вгору для місячного виду",
+    "dragDownForWeek": "Потягніть вниз для тижневого виду"
   }
 }

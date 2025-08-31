@@ -120,12 +120,8 @@ export const HistoryScreen: React.FC = () => {
   };
 
   const formatDate = (date: Date) => {
-    const options: Intl.DateTimeFormatOptions = {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-    };
-    return date.toLocaleDateString('ru-RU', options);
+    const monthKey = date.toLocaleDateString('en-US', { month: 'long' }).toLowerCase();
+    return `${date.getDate()} ${t(`months.${monthKey}`)} ${date.getFullYear()}`;
   };
 
   const isToday = (date: Date) => {
@@ -139,7 +135,9 @@ export const HistoryScreen: React.FC = () => {
     <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
       <View style={styles.header}>
         <Text style={[styles.title, { color: colors.text }]}>{t('history.title')}</Text>
-        <Text style={[styles.subtitle, { color: colors.textSecondary }]}>{t('history.month')}</Text>
+        <Text style={[styles.subtitle, { color: colors.textSecondary }]}>
+          {t(`months.${selectedDate.toLocaleDateString('en-US', { month: 'long' }).toLowerCase()}`)} {selectedDate.getFullYear()}
+        </Text>
       </View>
 
       <Calendar
@@ -198,7 +196,7 @@ export const HistoryScreen: React.FC = () => {
 
              <View style={styles.habitsSection}>
                <Text style={[styles.sectionTitle, { color: colors.text }]}>
-                 {t('history.title')} {selectedDate.getDate()} {t(`months.${selectedDate.toLocaleDateString('en-US', { month: 'long' }).toLowerCase()}`)}
+                 {t('history.title')} {formatDate(selectedDate)}
                </Text>
              </View>
            </View>

@@ -120,5 +120,17 @@
     "friday": "Жм",
     "saturday": "Сн",
     "sunday": "Жк"
+  },
+  "calendar": {
+    "week": "Апта",
+    "month": "Ай",
+    "today": "Бүгін",
+    "tomorrow": "Ертең",
+    "overdue": "Мерзімі өткен",
+    "reschedule": "Кейінге қалдыру",
+    "showWeek": "Аптаны көрсету",
+    "showMonth": "Айды көрсету",
+    "dragUpForMonth": "Ай көрінісі үшін жоғары тартыңыз",
+    "dragDownForWeek": "Апта көрінісі үшін төмен тартыңыз"
   }
 }
