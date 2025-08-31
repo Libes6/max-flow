@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Flow Max Icon Generator</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background: #f0f0f0;
+            font-family: Arial, sans-serif;
+        }
+        .icon-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+        .icon {
+            border: 2px solid #333;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        }
+        .icon-info {
+            text-align: center;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        .download-btn {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .download-btn:hover {
+            background: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <h1>Flow Max - Генератор иконок</h1>
+    <p>Иконки приложения в синих оттенках с котиком</p>
+    
+    <div class="icon-container">
+        <!-- Android mipmap-hdpi (72x72) -->
+        <div>
+            <canvas id="icon72" width="72" height="72" class="icon"></canvas>
+            <div class="icon-info">72x72 (hdpi)</div>
+            <button class="download-btn" onclick="downloadIcon('icon72', 'ic_launcher_72x72.png')">Скачать</button>
+        </div>
+        
+        <!-- Android mipmap-mdpi (48x48) -->
+        <div>
+            <canvas id="icon48" width="48" height="48" class="icon"></canvas>
+            <div class="icon-info">48x48 (mdpi)</div>
+            <button class="download-btn" onclick="downloadIcon('icon48', 'ic_launcher_48x48.png')">Скачать</button>
+        </div>
+        
+        <!-- Android mipmap-xhdpi (96x96) -->
+        <div>
+            <canvas id="icon96" width="96" height="96" class="icon"></canvas>
+            <div class="icon-info">96x96 (xhdpi)</div>
+            <button class="download-btn" onclick="downloadIcon('icon96', 'ic_launcher_96x96.png')">Скачать</button>
+        </div>
+        
+        <!-- Android mipmap-xxhdpi (144x144) -->
+        <div>
+            <canvas id="icon144" width="144" height="144" class="icon"></canvas>
+            <div class="icon-info">144x144 (xxhdpi)</div>
+            <button class="download-btn" onclick="downloadIcon('icon144', 'ic_launcher_144x144.png')">Скачать</button>
+        </div>
+        
+        <!-- Android mipmap-xxxhdpi (192x192) -->
+        <div>
+            <canvas id="icon192" width="192" height="192" class="icon"></canvas>
+            <div class="icon-info">192x192 (xxxhdpi)</div>
+            <button class="download-btn" onclick="downloadIcon('icon192', 'ic_launcher_192x192.png')">Скачать</button>
+        </div>
+    </div>
+
+    <script>
+        function drawIcon(canvasId, size) {
+            const canvas = document.getElementById(canvasId);
+            const ctx = canvas.getContext('2d');
+            
+            // Очищаем canvas
+            ctx.clearRect(0, 0, size, size);
+            
+            // Создаем градиентный фон
+            const gradient = ctx.createLinearGradient(0, 0, size, size);
+            gradient.addColorStop(0, '#3498DB');
+            gradient.addColorStop(0.5, '#2980B9');
+            gradient.addColorStop(1, '#1F4E79');
+            
+            // Рисуем фон с закругленными углами
+            ctx.fillStyle = gradient;
+            ctx.beginPath();
+            ctx.roundRect(0, 0, size, size, size * 0.2);
+            ctx.fill();
+            
+            // Масштабируем элементы в зависимости от размера
+            const scale = size / 1024;
+            const offset = size * 0.2;
+            
+            // Рисуем котика
+            drawCat(ctx, offset, offset, scale);
+        }
+        
+        function drawCat(ctx, x, y, scale) {
+            const s = scale; // масштаб
+            
+            // Тело котика
+            ctx.fillStyle = '#4A90E2';
+            ctx.beginPath();
+            ctx.ellipse(x + 312 * s, y + 400 * s, 180 * s, 200 * s, 0, 0, 2 * Math.PI);
+            ctx.fill();
+            
+            // Голова
+            ctx.beginPath();
+            ctx.arc(x + 312 * s, y + 280 * s, 120 * s, 0, 2 * Math.PI);
+            ctx.fill();
+            
+            // Уши
+            ctx.fillStyle = '#357ABD';
+            ctx.beginPath();
+            ctx.moveTo(x + 220 * s, y + 200 * s);
+            ctx.quadraticCurveTo(x + 200 * s, y + 180 * s, x + 220 * s, y + 160 * s);
+            ctx.lineTo(x + 240 * s, y + 180 * s);
+            ctx.quadraticCurveTo(x + 220 * s, y + 200 * s, x + 220 * s, y + 200 * s);
+            ctx.fill();
+            
+            ctx.beginPath();
+            ctx.moveTo(x + 404 * s, y + 200 * s);
+            ctx.quadraticCurveTo(x + 424 * s, y + 180 * s, x + 404 * s, y + 160 * s);
+            ctx.lineTo(x + 384 * s, y + 180 * s);
+            ctx.quadraticCurveTo(x + 404 * s, y + 200 * s, x + 404 * s, y + 200 * s);
+            ctx.fill();
+            
+            // Глаза
+            ctx.fillStyle = 'white';
+            ctx.beginPath();
+            ctx.arc(x + 280 * s, y + 260 * s, 25 * s, 0, 2 * Math.PI);
+            ctx.fill();
+            ctx.beginPath();
+            ctx.arc(x + 344 * s, y + 260 * s, 25 * s, 0, 2 * Math.PI);
+            ctx.fill();
+            
+            ctx.fillStyle = '#2C3E50';
+            ctx.beginPath();
+            ctx.arc(x + 280 * s, y + 260 * s, 15 * s, 0, 2 * Math.PI);
+            ctx.fill();
+            ctx.beginPath();
+            ctx.arc(x + 344 * s, y + 260 * s, 15 * s, 0, 2 * Math.PI);
+            ctx.fill();
+            
+            ctx.fillStyle = 'white';
+            ctx.beginPath();
+            ctx.arc(x + 275 * s, y + 255 * s, 8 * s, 0, 2 * Math.PI);
+            ctx.fill();
+            ctx.beginPath();
+            ctx.arc(x + 339 * s, y + 255 * s, 8 * s, 0, 2 * Math.PI);
+            ctx.fill();
+            
+            // Нос
+            ctx.fillStyle = '#E74C3C';
+            ctx.beginPath();
+            ctx.moveTo(x + 312 * s, y + 290 * s);
+            ctx.lineTo(x + 300 * s, y + 300 * s);
+            ctx.lineTo(x + 324 * s, y + 300 * s);
+            ctx.closePath();
+            ctx.fill();
+            
+            // Рот
+            ctx.strokeStyle = '#2C3E50';
+            ctx.lineWidth = 3 * s;
+            ctx.beginPath();
+            ctx.moveTo(x + 300 * s, y + 320 * s);
+            ctx.quadraticCurveTo(x + 312 * s, y + 340 * s, x + 324 * s, y + 320 * s);
+            ctx.stroke();
+            
+            // Лапки
+            ctx.fillStyle = '#357ABD';
+            ctx.beginPath();
+            ctx.ellipse(x + 250 * s, y + 580 * s, 30 * s, 40 * s, 0, 0, 2 * Math.PI);
+            ctx.fill();
+            ctx.beginPath();
+            ctx.ellipse(x + 374 * s, y + 580 * s, 30 * s, 40 * s, 0, 0, 2 * Math.PI);
+            ctx.fill();
+            
+            // Хвост
+            ctx.beginPath();
+            ctx.moveTo(x + 450 * s, y + 350 * s);
+            ctx.quadraticCurveTo(x + 500 * s, y + 300 * s, x + 520 * s, y + 350 * s);
+            ctx.quadraticCurveTo(x + 540 * s, y + 400 * s, x + 500 * s, y + 450 * s);
+            ctx.quadraticCurveTo(x + 480 * s, y + 480 * s, x + 450 * s, y + 450 * s);
+            ctx.quadraticCurveTo(x + 470 * s, y + 420 * s, x + 450 * s, y + 350 * s);
+            ctx.fill();
+        }
+        
+        function downloadIcon(canvasId, filename) {
+            const canvas = document.getElementById(canvasId);
+            const link = document.createElement('a');
+            link.download = filename;
+            link.href = canvas.toDataURL();
+            link.click();
+        }
+        
+        // Рисуем все иконки при загрузке
+        window.onload = function() {
+            drawIcon('icon48', 48);
+            drawIcon('icon72', 72);
+            drawIcon('icon96', 96);
+            drawIcon('icon144', 144);
+            drawIcon('icon192', 192);
+        };
+        
+        // Добавляем поддержку roundRect для старых браузеров
+        if (!CanvasRenderingContext2D.prototype.roundRect) {
+            CanvasRenderingContext2D.prototype.roundRect = function(x, y, width, height, radius) {
+                this.beginPath();
+                this.moveTo(x + radius, y);
+                this.lineTo(x + width - radius, y);
+                this.quadraticCurveTo(x + width, y, x + width, y + radius);
+                this.lineTo(x + width, y + height - radius);
+                this.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+                this.lineTo(x + radius, y + height);
+                this.quadraticCurveTo(x, y + height, x, y + height - radius);
+                this.lineTo(x, y + radius);
+                this.quadraticCurveTo(x, y, x + radius, y);
+                this.closePath();
+            };
+        }
+    </script>
+</body>
+</html>

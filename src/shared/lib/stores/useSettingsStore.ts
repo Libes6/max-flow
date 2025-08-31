@@ -25,7 +25,9 @@ export const useSettingsStore = create<SettingsState>()(
         set({ language });
       },
       setTheme: (theme: 'light' | 'dark') => {
+        console.log('SettingsStore: setTheme called with:', theme);
         set({ theme });
+        console.log('SettingsStore: theme state updated to:', theme);
       },
       setNotifications: (notifications: boolean) => {
         set({ notifications });

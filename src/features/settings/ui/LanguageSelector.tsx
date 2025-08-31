@@ -1,121 +1,56 @@
-import React, { useState } from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  Modal,
-  TouchableOpacity,
-  FlatList,
-} from 'react-native';
+import React from 'react';
+import {View, Text, StyleSheet} from 'react-native';
 import { useTranslation } from 'react-i18next';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { colors, spacing, typography } from '../../../shared/theme';
+import { useTheme } from '../../../shared/theme';
 import { useSettingsStore, Language } from '../../../shared/lib/stores/useSettingsStore';
+import { spacing, typography } from '../../../shared/theme';
+import { OptionSelector, Option } from '../../../shared/ui';
 
-interface LanguageOption {
-  code: Language;
-  name: string;
-  nativeName: string;
-}
-
-const languages: LanguageOption[] = [
-  { code: 'ru', name: 'Russian', nativeName: 'Русский' },
-  { code: 'en', name: 'English', nativeName: 'English' },
-  { code: 'uk', name: 'Ukrainian', nativeName: 'Українська' },
-  { code: 'kk', name: 'Kazakh', nativeName: 'Қазақша' },
+const getLanguageOptions = (t: any): Option[] => [
+  { value: 'ru', label: 'Русский', description: 'Russian', icon: 'language-outline' },
+  { value: 'en', label: 'English', description: 'English', icon: 'language-outline' },
+  { value: 'uk', label: 'Українська', description: 'Ukrainian', icon: 'language-outline' },
+  { value: 'kk', label: 'Қазақша', description: 'Kazakh', icon: 'language-outline' },
 ];
 
 export const LanguageSelector: React.FC = () => {
   const { t } = useTranslation();
+  const { colors } = useTheme();
   const { language, setLanguage } = useSettingsStore();
-  const [isModalVisible, setIsModalVisible] = useState(false);
 
-  const currentLanguage = languages.find(lang => lang.code === language);
+  const languageOptions = getLanguageOptions(t);
+  const currentLanguage = languageOptions.find(option => option.value === language);
 
-  const handleLanguageSelect = (langCode: Language) => {
-    setLanguage(langCode);
-    setIsModalVisible(false);
+  const handleLanguageSelect = (value: string) => {
+    setLanguage(value as Language);
   };
 
-  const renderLanguageItem = ({ item }: { item: LanguageOption }) => (
-    <TouchableOpacity
-      style={[
-        styles.languageItem,
-        item.code === language && styles.selectedLanguageItem
-      ]}
-      onPress={() => handleLanguageSelect(item.code)}
-    >
-      <View style={styles.languageInfo}>
-        <Text style={[
-          styles.languageName,
-          item.code === language && styles.selectedText
-        ]}>
-          {item.nativeName}
+  const trigger = (
+    <View style={styles.settingItem}>
+      <View style={styles.settingIcon}>
+        <Ionicons name="language-outline" size={20} color={colors.textSecondary} />
+      </View>
+      <View style={styles.settingContent}>
+        <Text style={[styles.settingTitle, { color: colors.text }]}>
+          {t('settings.language')}
         </Text>
-        <Text style={[
-          styles.languageCode,
-          item.code === language && styles.selectedText
-        ]}>
-          {item.name}
+        <Text style={[styles.settingSubtitle, { color: colors.textSecondary }]}>
+          {currentLanguage?.label || t('languages.ru')}
         </Text>
       </View>
-      {item.code === language && (
-        <Ionicons 
-          name="checkmark" 
-          size={20} 
-          color={colors.primary} 
-        />
-      )}
-    </TouchableOpacity>
+      <Ionicons name="chevron-forward" size={20} color={colors.textTertiary} />
+    </View>
   );
 
   return (
-    <>
-      <TouchableOpacity 
-        style={styles.settingItem} 
-        onPress={() => setIsModalVisible(true)}
-      >
-        <View style={styles.settingIcon}>
-          <Ionicons name="language-outline" size={20} color={colors.textSecondary} />
-        </View>
-        <View style={styles.settingContent}>
-          <Text style={styles.settingTitle}>{t('settings.language')}</Text>
-          <Text style={styles.settingSubtitle}>
-            {currentLanguage?.nativeName || t('languages.ru')}
-          </Text>
-        </View>
-        <Ionicons name="chevron-forward" size={20} color={colors.textTertiary} />
-      </TouchableOpacity>
-
-      <Modal
-        visible={isModalVisible}
-        transparent={true}
-        animationType="slide"
-        onRequestClose={() => setIsModalVisible(false)}
-      >
-        <View style={styles.modalOverlay}>
-          <View style={styles.modalContent}>
-            <View style={styles.modalHeader}>
-              <Text style={styles.modalTitle}>{t('settings.language')}</Text>
-              <TouchableOpacity 
-                onPress={() => setIsModalVisible(false)}
-                style={styles.closeButton}
-              >
-                <Ionicons name="close" size={24} color={colors.text} />
-              </TouchableOpacity>
-            </View>
-            
-            <FlatList
-              data={languages}
-              keyExtractor={(item) => item.code}
-              renderItem={renderLanguageItem}
-              style={styles.languagesList}
-              showsVerticalScrollIndicator={false}
-            />
-          </View>
-        </View>
-      </Modal>
-    </>
+    <OptionSelector
+      title={t('settings.language')}
+      options={languageOptions}
+      selectedValue={language}
+      onSelect={handleLanguageSelect}
+      trigger={trigger}
+    />
   );
 };
 
@@ -125,9 +60,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: spacing.lg,
     paddingVertical: spacing.md,
-    backgroundColor: colors.surface,
     borderBottomWidth: 1,
-    borderBottomColor: colors.border,
   },
   settingIcon: {
     width: 40,
@@ -139,68 +72,9 @@ const styles = StyleSheet.create({
   },
   settingTitle: {
     ...typography.body,
-    color: colors.text,
     marginBottom: spacing.xs,
   },
   settingSubtitle: {
     ...typography.caption,
-    color: colors.textSecondary,
-  },
-  modalOverlay: {
-    flex: 1,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    justifyContent: 'flex-end',
-  },
-  modalContent: {
-    backgroundColor: colors.surface,
-    borderTopLeftRadius: 20,
-    borderTopRightRadius: 20,
-    maxHeight: '60%',
-  },
-  modalHeader: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    padding: spacing.lg,
-    borderBottomWidth: 1,
-    borderBottomColor: colors.border,
-  },
-  modalTitle: {
-    ...typography.h2,
-    color: colors.text,
-  },
-  closeButton: {
-    padding: spacing.xs,
-  },
-  languagesList: {
-    maxHeight: 300,
-  },
-  languageItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingHorizontal: spacing.lg,
-    paddingVertical: spacing.md,
-    borderBottomWidth: 1,
-    borderBottomColor: colors.border,
-  },
-  selectedLanguageItem: {
-    backgroundColor: colors.primaryLight,
-  },
-  languageInfo: {
-    flex: 1,
-  },
-  languageName: {
-    ...typography.body,
-    color: colors.text,
-    marginBottom: spacing.xs / 2,
-  },
-  languageCode: {
-    ...typography.caption,
-    color: colors.textSecondary,
-  },
-  selectedText: {
-    color: colors.primary,
-    fontWeight: '600',
   },
 });

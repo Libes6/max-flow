@@ -6,7 +6,6 @@ import {
   Modal,
   TouchableOpacity,
   TextInput,
-  Alert,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -63,7 +62,7 @@ export const EditHabitModal: React.FC<EditHabitModalProps> = ({
 
   const handleSubmit = () => {
     if (!name.trim()) {
-      Alert.alert('Ошибка', 'Название привычки обязательно');
+      // Название привычки обязательно
       return;
     }
 
@@ -78,14 +77,8 @@ export const EditHabitModal: React.FC<EditHabitModalProps> = ({
   };
 
   const handleDelete = () => {
-    Alert.alert(
-      'Удалить привычку',
-      'Вы уверены, что хотите удалить эту привычку? Это действие нельзя отменить.',
-      [
-        { text: 'Отмена', style: 'cancel' },
-        { text: 'Удалить', style: 'destructive', onPress: onDelete },
-      ]
-    );
+    // Удаляем привычку без подтверждения
+    onDelete();
   };
 
   return (

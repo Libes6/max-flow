@@ -11,7 +11,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { colors, spacing, typography, dimensions } from '../../../shared/theme';
+import { useTheme, spacing, typography, dimensions } from '../../../shared/theme';
 import { Calendar } from '../../../shared/ui';
 import { useHabitsStore } from '../../habits/model/useHabitsStore';
 import { useStatisticsStore } from '../../statistics/model/useStatisticsStore';
@@ -24,22 +24,23 @@ const HabitDayCard: React.FC<{
   onToggle: () => void;
   onEdit: () => void;
 }> = ({ habit, isCompleted, onToggle, onEdit }) => {
+  const { colors } = useTheme();
 
   return (
     <TouchableOpacity 
-      style={styles.habitDayCard}
+      style={[styles.habitDayCard, { backgroundColor: colors.surface, borderColor: colors.border }]}
       onPress={onEdit}
     >
       <View style={styles.habitDayHeader}>
         <View style={[styles.habitDayIcon, { backgroundColor: habit.color }]}>
-          <Text style={styles.habitDayIconText}>
+          <Text style={[styles.habitDayIconText, { color: colors.text }]}>
             {habit.name.charAt(0).toUpperCase()}
           </Text>
         </View>
         <View style={styles.habitDayInfo}>
-          <Text style={styles.habitDayName}>{habit.name}</Text>
+          <Text style={[styles.habitDayName, { color: colors.text }]}>{habit.name}</Text>
           {!!habit.description && (
-            <Text style={styles.habitDayDescription}>{habit.description}</Text>
+            <Text style={[styles.habitDayDescription, { color: colors.textSecondary }]}>{habit.description}</Text>
           )}
         </View>
       </View>
@@ -62,6 +63,7 @@ const HabitDayCard: React.FC<{
 
 export const HistoryScreen: React.FC = () => {
   const { t } = useTranslation();
+  const { colors } = useTheme();
   const habits = useHabitsStore((s) => s.habits);
   const updateHabit = useHabitsStore((s) => s.updateHabit);
   const { habitCompletions, markHabitCompleted, markHabitIncomplete } = useStatisticsStore();
@@ -134,10 +136,10 @@ export const HistoryScreen: React.FC = () => {
   const dayStats = getDayStats();
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
       <View style={styles.header}>
-        <Text style={styles.title}>{t('history.title')}</Text>
-        <Text style={styles.subtitle}>{t('history.month')}</Text>
+        <Text style={[styles.title, { color: colors.text }]}>{t('history.title')}</Text>
+        <Text style={[styles.subtitle, { color: colors.textSecondary }]}>{t('history.month')}</Text>
       </View>
 
       <Calendar
@@ -162,12 +164,12 @@ export const HistoryScreen: React.FC = () => {
            <View>
              <View style={styles.selectedDateSection}>
                <View style={styles.selectedDateHeader}>
-                 <Text style={styles.selectedDateTitle}>
+                 <Text style={[styles.selectedDateTitle, { color: colors.text }]}>
                    {formatDate(selectedDate)}
                  </Text>
                  {isToday(selectedDate) && (
-                   <View style={styles.todayBadge}>
-                     <Text style={styles.todayBadgeText}>Сегодня</Text>
+                   <View style={[styles.todayBadge, { backgroundColor: colors.primary }]}>
+                     <Text style={[styles.todayBadgeText, { color: colors.text }]}>Сегодня</Text>
                    </View>
                  )}
                </View>
@@ -175,18 +177,18 @@ export const HistoryScreen: React.FC = () => {
                {dayStats.totalCount > 0 && (
                  <View style={styles.dayProgressSection}>
                    <View style={styles.dayProgressHeader}>
-                     <Text style={styles.dayProgressText}>
+                     <Text style={[styles.dayProgressText, { color: colors.text }]}>
                        Прогресс: {dayStats.completedCount}/{dayStats.totalCount}
                      </Text>
-                     <Text style={styles.dayProgressPercentage}>
+                     <Text style={[styles.dayProgressPercentage, { color: colors.primary }]}>
                        {Math.round(dayStats.progressPercentage)}%
                      </Text>
                    </View>
-                   <View style={styles.dayProgressBar}>
+                   <View style={[styles.dayProgressBar, { backgroundColor: colors.border }]}>
                      <View
                        style={[
                          styles.dayProgressFill,
-                         { width: `${dayStats.progressPercentage}%` }
+                         { backgroundColor: colors.primary, width: `${dayStats.progressPercentage}%` }
                        ]}
                      />
                    </View>
@@ -195,7 +197,7 @@ export const HistoryScreen: React.FC = () => {
              </View>
 
              <View style={styles.habitsSection}>
-               <Text style={styles.sectionTitle}>
+               <Text style={[styles.sectionTitle, { color: colors.text }]}>
                  {t('history.title')} {selectedDate.getDate()} {t(`months.${selectedDate.toLocaleDateString('en-US', { month: 'long' }).toLowerCase()}`)}
                </Text>
              </View>
@@ -208,10 +210,10 @@ export const HistoryScreen: React.FC = () => {
                size={64}
                color={colors.textTertiary}
              />
-             <Text style={styles.emptyStateText}>
+             <Text style={[styles.emptyStateText, { color: colors.textSecondary }]}>
                {t('history.noEntries')}
              </Text>
-             <Text style={styles.emptyStateSubtext}>
+             <Text style={[styles.emptyStateSubtext, { color: colors.textTertiary }]}>
                {t('history.noEntriesSubtitle')}
              </Text>
              </View>
@@ -227,7 +229,8 @@ export const HistoryScreen: React.FC = () => {
         onClose={handleCloseModal}
         onSubmit={handleUpdateHabit}
         onDelete={() => {
-          Alert.alert('Информация', 'Для удаления привычки перейдите в раздел "Привычки"');
+          // Удаление из экрана "История" не поддерживается
+          // Для удаления привычки перейдите в раздел "Привычки"
         }}
       />
     </SafeAreaView>
@@ -237,7 +240,6 @@ export const HistoryScreen: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.background,
   },
   header: {
     paddingHorizontal: spacing.lg,
@@ -245,12 +247,10 @@ const styles = StyleSheet.create({
   },
   title: {
     ...typography.h1,
-    color: colors.text,
     marginBottom: spacing.xs,
   },
   subtitle: {
     ...typography.body,
-    color: colors.textSecondary,
   },
   flatList: {
     flexGrow: 1,
@@ -272,19 +272,16 @@ const styles = StyleSheet.create({
   },
   selectedDateTitle: {
     ...typography.h2,
-    color: colors.text,
     flex: 1,
     flexShrink: 1,
   },
   todayBadge: {
-    backgroundColor: colors.primary,
     paddingHorizontal: spacing.sm,
     paddingVertical: spacing.xs,
     borderRadius: 12,
   },
   todayBadgeText: {
     ...typography.caption,
-    color: colors.text,
     fontWeight: '500',
   },
   dayProgressSection: {
@@ -298,21 +295,17 @@ const styles = StyleSheet.create({
   },
   dayProgressText: {
     ...typography.body,
-    color: colors.text,
   },
   dayProgressPercentage: {
     ...typography.h3,
-    color: colors.primary,
   },
   dayProgressBar: {
     height: 6,
-    backgroundColor: colors.border,
     borderRadius: 3,
     overflow: 'hidden',
   },
   dayProgressFill: {
     height: '100%',
-    backgroundColor: colors.primary,
     borderRadius: 3,
   },
   habitsSection: {
@@ -320,16 +313,13 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     ...typography.h3,
-    color: colors.text,
     marginBottom: spacing.md,
   },
   habitDayCard: {
-    backgroundColor: colors.surface,
     borderRadius: 12,
     padding: spacing.md,
     marginBottom: spacing.sm,
     borderWidth: 1,
-    borderColor: colors.border,
     flexDirection: 'row',
     alignItems: 'center',
   },
@@ -347,7 +337,6 @@ const styles = StyleSheet.create({
     marginRight: spacing.md,
   },
   habitDayIconText: {
-    color: colors.text,
     fontSize: 16,
     fontWeight: 'bold',
   },
@@ -356,12 +345,10 @@ const styles = StyleSheet.create({
   },
   habitDayName: {
     ...typography.body,
-    color: colors.text,
     marginBottom: spacing.xs,
   },
   habitDayDescription: {
     ...typography.caption,
-    color: colors.textSecondary,
   },
   habitDayActions: {
     flexDirection: 'row',
@@ -377,14 +364,12 @@ const styles = StyleSheet.create({
   },
   emptyStateText: {
     ...typography.h3,
-    color: colors.textSecondary,
     textAlign: 'center',
     marginTop: spacing.md,
     marginBottom: spacing.sm,
   },
   emptyStateSubtext: {
     ...typography.bodySmall,
-    color: colors.textTertiary,
     textAlign: 'center',
   },
 });

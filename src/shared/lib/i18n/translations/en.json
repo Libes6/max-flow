@@ -21,6 +21,12 @@
     "privacy": "Privacy Policy",
     "terms": "Terms of Use"
   },
+  "themes": {
+    "light": "Light",
+    "dark": "Dark",
+    "lightDescription": "Light theme with blue accents",
+    "darkDescription": "Dark theme with purple accents"
+  },
   "languages": {
     "ru": "Русский",
     "en": "English",

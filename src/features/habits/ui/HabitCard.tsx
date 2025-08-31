@@ -2,7 +2,7 @@ import React, { useCallback, useRef, useState } from 'react';
 import { View, StyleSheet, TouchableOpacity, Text, Animated } from 'react-native';
 import { PanGestureHandler, State, PanGestureHandlerGestureEvent } from 'react-native-gesture-handler';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { colors, spacing, typography } from '../../../shared/theme';
+import { useTheme, spacing, typography } from '../../../shared/theme';
 
 interface HabitCardProps {
   habit: {
@@ -17,6 +17,7 @@ interface HabitCardProps {
 }
 
 export const HabitCard: React.FC<HabitCardProps> = ({ habit, onEdit, onDelete }) => {
+  const { colors } = useTheme();
   const translateX = useRef(new Animated.Value(0)).current;
   const [isSwiped, setIsSwiped] = useState(false);
   const swipeThreshold = 80;
@@ -79,7 +80,7 @@ export const HabitCard: React.FC<HabitCardProps> = ({ habit, onEdit, onDelete })
   return (
     <View style={styles.container}>
       {/* Фон с кнопкой удаления */}
-      <Animated.View style={[styles.deleteBackground, animatedBackgroundStyle]}>
+      <Animated.View style={[styles.deleteBackground, { backgroundColor: colors.error }, animatedBackgroundStyle]}>
         <TouchableOpacity
           style={styles.deleteButton}
           onPress={handleDelete}
@@ -96,24 +97,24 @@ export const HabitCard: React.FC<HabitCardProps> = ({ habit, onEdit, onDelete })
         onHandlerStateChange={onHandlerStateChange}
         activeOffsetX={[-10, 10]}
       >
-        <Animated.View style={[styles.card, animatedCardStyle]}>
+        <Animated.View style={[styles.card, { backgroundColor: colors.surface, borderColor: colors.border }, animatedCardStyle]}>
           <TouchableOpacity 
-            style={styles.habitCard}
+            style={[styles.habitCard, { borderColor: colors.border }]}
             onPress={onEdit}
           >
             <View style={styles.habitHeader}>
               <View style={[styles.habitIcon, { backgroundColor: habit.color }]}>
-                <Text style={styles.habitIconText}>
+                <Text style={[styles.habitIconText, { color: colors.text }]}>
                   {habit.name.charAt(0).toUpperCase()}
                 </Text>
               </View>
               <View style={styles.habitInfo}>
-                <Text style={styles.habitName}>{habit.name}</Text>
+                <Text style={[styles.habitName, { color: colors.text }]}>{habit.name}</Text>
                 {!!habit.description && (
-                  <Text style={styles.habitDescription}>{habit.description}</Text>
+                  <Text style={[styles.habitDescription, { color: colors.textSecondary }]}>{habit.description}</Text>
                 )}
                 {!!habit.category && (
-                  <Text style={styles.habitCategory}>{habit.category}</Text>
+                  <Text style={[styles.habitCategory, { color: colors.textTertiary }]}>{habit.category}</Text>
                 )}
               </View>
             </View>
@@ -138,7 +139,6 @@ const styles = StyleSheet.create({
     top: 0,
     bottom: 0,
     width: 80,
-    backgroundColor: colors.error,
     borderRadius: 12,
     justifyContent: 'center',
     alignItems: 'center',
@@ -158,16 +158,13 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   card: {
-    backgroundColor: colors.surface,
     borderRadius: 12,
     borderWidth: 1,
-    borderColor: colors.border,
     zIndex: 2,
   },
   habitCard: {
     borderRadius: 12,
     padding: spacing.lg,
-    borderColor: colors.border,
     flexDirection: 'row',
     alignItems: 'center',
   },
@@ -185,7 +182,6 @@ const styles = StyleSheet.create({
     marginRight: spacing.md,
   },
   habitIconText: {
-    color: colors.text,
     fontSize: 20,
     fontWeight: 'bold',
   },
@@ -194,17 +190,14 @@ const styles = StyleSheet.create({
   },
   habitName: {
     ...typography.h3,
-    color: colors.text,
     marginBottom: spacing.xs,
   },
   habitDescription: {
     ...typography.bodySmall,
-    color: colors.textSecondary,
     marginBottom: spacing.xs,
   },
   habitCategory: {
     ...typography.caption,
-    color: colors.textTertiary,
   },
   habitArrow: {
     marginLeft: spacing.sm,

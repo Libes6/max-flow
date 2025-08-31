@@ -10,7 +10,7 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { colors, spacing, typography, dimensions } from '../../../shared/theme';
+import { useTheme, spacing, typography, dimensions } from '../../../shared/theme';
 import { useHabitsStore } from '../../habits/model/useHabitsStore';
 import { useStatisticsStore } from '../model/useStatisticsStore';
 
@@ -19,20 +19,25 @@ const StatCard: React.FC<{
   label: string;
   icon?: keyof typeof Ionicons.glyphMap;
   color?: string;
-}> = ({ number, label, icon, color = colors.primary }) => (
-  <View style={styles.statCard}>
-    {icon && (
-      <Ionicons 
-        name={icon} 
-        size={24} 
-        color={color} 
-        style={styles.statIcon}
-      />
-    )}
-    <Text style={[styles.statNumber, { color }]}>{number}</Text>
-    <Text style={styles.statLabel}>{label}</Text>
-  </View>
-);
+}> = ({ number, label, icon, color }) => {
+  const { colors } = useTheme();
+  const defaultColor = color || colors.primary;
+  
+  return (
+    <View style={[styles.statCard, { backgroundColor: colors.surface, borderColor: colors.border }]}>
+      {icon && (
+        <Ionicons 
+          name={icon} 
+          size={24} 
+          color={defaultColor} 
+          style={styles.statIcon}
+        />
+      )}
+      <Text style={[styles.statNumber, { color: defaultColor }]}>{number}</Text>
+      <Text style={[styles.statLabel, { color: colors.textSecondary }]}>{label}</Text>
+    </View>
+  );
+};
 
 const HabitStatCard: React.FC<{
   habit: any;
@@ -43,35 +48,36 @@ const HabitStatCard: React.FC<{
   };
 }> = ({ habit, stats }) => {
   const { t } = useTranslation();
+  const { colors } = useTheme();
   
   return (
-    <View style={styles.habitStatCard}>
+    <View style={[styles.habitStatCard, { backgroundColor: colors.surface, borderColor: colors.border }]}>
       <View style={styles.habitStatHeader}>
         <View style={[styles.habitStatIcon, { backgroundColor: habit.color }]}>
-          <Text style={styles.habitStatIconText}>
+          <Text style={[styles.habitStatIconText, { color: colors.text }]}>
             {habit.name.charAt(0).toUpperCase()}
           </Text>
         </View>
         <View style={styles.habitStatInfo}>
-          <Text style={styles.habitStatName}>{habit.name}</Text>
-          <Text style={styles.habitStatCategory}>{habit.category}</Text>
+          <Text style={[styles.habitStatName, { color: colors.text }]}>{habit.name}</Text>
+          <Text style={[styles.habitStatCategory, { color: colors.textSecondary }]}>{habit.category}</Text>
         </View>
       </View>
       
       <View style={styles.habitStatMetrics}>
         <View style={styles.habitStatMetric}>
-          <Text style={styles.habitStatMetricNumber}>🔥 {stats.currentStreak}</Text>
-          <Text style={styles.habitStatMetricLabel}>{t('statistics.streak')}</Text>
+          <Text style={[styles.habitStatMetricNumber, { color: colors.primary }]}>🔥 {stats.currentStreak}</Text>
+          <Text style={[styles.habitStatMetricLabel, { color: colors.textSecondary }]}>{t('statistics.streak')}</Text>
         </View>
         
         <View style={styles.habitStatMetric}>
-          <Text style={styles.habitStatMetricNumber}>🏆 {stats.longestStreak}</Text>
-          <Text style={styles.habitStatMetricLabel}>{t('statistics.streak')}</Text>
+          <Text style={[styles.habitStatMetricNumber, { color: colors.primary }]}>🏆 {stats.longestStreak}</Text>
+          <Text style={[styles.habitStatMetricLabel, { color: colors.textSecondary }]}>{t('statistics.streak')}</Text>
         </View>
         
         <View style={styles.habitStatMetric}>
-          <Text style={styles.habitStatMetricNumber}>{Math.round(stats.completionRate)}%</Text>
-          <Text style={styles.habitStatMetricLabel}>{t('statistics.completionRate')}</Text>
+          <Text style={[styles.habitStatMetricNumber, { color: colors.primary }]}>{Math.round(stats.completionRate)}%</Text>
+          <Text style={[styles.habitStatMetricLabel, { color: colors.textSecondary }]}>{t('statistics.completionRate')}</Text>
         </View>
       </View>
     </View>
@@ -80,6 +86,7 @@ const HabitStatCard: React.FC<{
 
 export const StatisticsScreen: React.FC = () => {
   const { t } = useTranslation();
+  const { colors } = useTheme();
   const habits = useHabitsStore((s) => s.habits);
   const { getOverallStats, getHabitStats, addTestData } = useStatisticsStore();
   
@@ -90,15 +97,15 @@ export const StatisticsScreen: React.FC = () => {
   }));
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
       <View style={styles.header}>
-        <Text style={styles.title}>{t('statistics.title')}</Text>
-        <Text style={styles.subtitle}>{t('statistics.overview')}</Text>
+        <Text style={[styles.title, { color: colors.text }]}>{t('statistics.title')}</Text>
+        <Text style={[styles.subtitle, { color: colors.textSecondary }]}>{t('statistics.overview')}</Text>
         <TouchableOpacity 
-          style={styles.testDataButton}
+          style={[styles.testDataButton, { backgroundColor: colors.primary }]}
           onPress={addTestData}
         >
-          <Text style={styles.testDataButtonText}>Добавить тестовые данные</Text>
+          <Text style={[styles.testDataButtonText, { color: colors.text }]}>Добавить тестовые данные</Text>
         </TouchableOpacity>
       </View>
       
@@ -114,7 +121,7 @@ export const StatisticsScreen: React.FC = () => {
         ListHeaderComponent={() => (
           <>
             <View style={styles.section}>
-              <Text style={styles.sectionTitle}>Общая статистика</Text>
+              <Text style={[styles.sectionTitle, { color: colors.text }]}>Общая статистика</Text>
               
               <View style={styles.statsGrid}>
                 <StatCard
@@ -148,7 +155,7 @@ export const StatisticsScreen: React.FC = () => {
             </View>
             
             <View style={styles.section}>
-              <Text style={styles.sectionTitle}>Статистика привычек</Text>
+              <Text style={[styles.sectionTitle, { color: colors.text }]}>Статистика привычек</Text>
             </View>
           </>
         )}
@@ -159,10 +166,10 @@ export const StatisticsScreen: React.FC = () => {
               size={64} 
               color={colors.textTertiary} 
             />
-            <Text style={styles.emptyStateText}>
+            <Text style={[styles.emptyStateText, { color: colors.textSecondary }]}>
               Данные появятся после добавления привычек
             </Text>
-            <Text style={styles.emptyStateSubtext}>
+            <Text style={[styles.emptyStateSubtext, { color: colors.textTertiary }]}>
               Отмечайте выполнение привычек, чтобы видеть статистику
             </Text>
           </View>
@@ -178,7 +185,6 @@ export const StatisticsScreen: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.background,
   },
   header: {
     paddingHorizontal: spacing.lg,
@@ -186,12 +192,10 @@ const styles = StyleSheet.create({
   },
   title: {
     ...typography.h1,
-    color: colors.text,
     marginBottom: spacing.xs,
   },
   subtitle: {
     ...typography.body,
-    color: colors.textSecondary,
   },
   content: {
     flex: 1,
@@ -205,7 +209,6 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     ...typography.h2,
-    color: colors.text,
     marginBottom: spacing.md,
   },
   statsGrid: {
@@ -215,13 +218,11 @@ const styles = StyleSheet.create({
   },
   statCard: {
     width: '48%',
-    backgroundColor: colors.surface,
     borderRadius: 12,
     padding: spacing.lg,
     marginBottom: spacing.md,
     alignItems: 'center',
     borderWidth: 1,
-    borderColor: colors.border,
   },
   statIcon: {
     marginBottom: spacing.sm,
@@ -232,16 +233,13 @@ const styles = StyleSheet.create({
   },
   statLabel: {
     ...typography.caption,
-    color: colors.textSecondary,
     textAlign: 'center',
   },
   habitStatCard: {
-    backgroundColor: colors.surface,
     borderRadius: 12,
     padding: spacing.lg,
     marginBottom: spacing.md,
     borderWidth: 1,
-    borderColor: colors.border,
   },
   habitStatHeader: {
     flexDirection: 'row',
@@ -257,7 +255,6 @@ const styles = StyleSheet.create({
     marginRight: spacing.md,
   },
   habitStatIconText: {
-    color: colors.text,
     fontSize: 16,
     fontWeight: 'bold',
   },
@@ -266,12 +263,10 @@ const styles = StyleSheet.create({
   },
   habitStatName: {
     ...typography.h3,
-    color: colors.text,
     marginBottom: spacing.xs,
   },
   habitStatCategory: {
     ...typography.caption,
-    color: colors.textSecondary,
   },
   habitStatMetrics: {
     flexDirection: 'row',
@@ -283,12 +278,10 @@ const styles = StyleSheet.create({
   },
   habitStatMetricNumber: {
     ...typography.h3,
-    color: colors.primary,
     marginBottom: spacing.xs,
   },
   habitStatMetricLabel: {
     ...typography.caption,
-    color: colors.textSecondary,
     textAlign: 'center',
   },
   emptyState: {
@@ -297,18 +290,15 @@ const styles = StyleSheet.create({
   },
   emptyStateText: {
     ...typography.h3,
-    color: colors.textSecondary,
     textAlign: 'center',
     marginTop: spacing.md,
     marginBottom: spacing.sm,
   },
   emptyStateSubtext: {
     ...typography.bodySmall,
-    color: colors.textTertiary,
     textAlign: 'center',
   },
   testDataButton: {
-    backgroundColor: colors.primary,
     paddingHorizontal: spacing.md,
     paddingVertical: spacing.sm,
     borderRadius: 8,
@@ -317,7 +307,6 @@ const styles = StyleSheet.create({
   },
   testDataButtonText: {
     ...typography.bodySmall,
-    color: colors.text,
     fontWeight: '500',
   },
 });

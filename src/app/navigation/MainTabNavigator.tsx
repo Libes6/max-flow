@@ -5,19 +5,22 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Platform } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { MainTabParamList } from './types';
-import { colors, dimensions } from '../../shared/theme';
+import { useTheme, dimensions } from '../../shared/theme';
 
-// Импорт экранов
-import { HabitsListScreen } from '../../features/habits/ui/HabitsListScreen';
-import { TodayScreen } from '../../features/today/ui/TodayScreen';
-import { HistoryScreen } from '../../features/history/ui/HistoryScreen';
-import { StatisticsScreen } from '../../features/statistics/ui/StatisticsScreen';
-import { SettingsScreen } from '../../features/settings/ui/SettingsScreen';
+// Импорт экранов из фич
+import { 
+  HabitsListScreen, 
+  TodayScreen, 
+  HistoryScreen, 
+  StatisticsScreen, 
+  SettingsScreen 
+} from '../../features';
 
 const Tab = createBottomTabNavigator<MainTabParamList>();
 
 export const MainTabNavigator: React.FC = () => {
   const { t } = useTranslation();
+  const { colors } = useTheme();
   const insets = useSafeAreaInsets();
 
   const tabBarStyle = {

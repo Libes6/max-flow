@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { AppSafeAreaProvider, QueryProvider, LanguageProvider } from './src/app/providers';
 import { RootNavigator } from './src/app/navigation';
+import { GlobalBottomSheetProvider } from './src/shared/ui/GlobalBottomSheet';
 import './src/shared/lib/i18n';
 
 
@@ -21,8 +22,10 @@ function App() {
                 <AppSafeAreaProvider>
                     <QueryProvider>
                         <LanguageProvider>
-                            <RootNavigator />
-                            <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
+                            <GlobalBottomSheetProvider>
+                                <RootNavigator />
+                                <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
+                            </GlobalBottomSheetProvider>
                         </LanguageProvider>
                     </QueryProvider>
                 </AppSafeAreaProvider>

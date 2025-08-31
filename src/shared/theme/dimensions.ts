@@ -34,6 +34,7 @@ export const dimensions = {
   
   // Дополнительные отступы для Android
   androidBottomPadding: 80,
+  androidBottomSheetPadding: 20,
 } as const;
 
 export type DimensionsKey = keyof typeof dimensions;

@@ -4,12 +4,11 @@ import {
   Text,
   StyleSheet,
   FlatList,
-  Alert,
   Platform,
 } from 'react-native';
 
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { colors, spacing, typography, dimensions } from '../../../shared/theme';
+import { useTheme, spacing, typography, dimensions } from '../../../shared/theme';
 import { Button } from '../../../shared/ui';
 import { HabitCard } from './HabitCard';
 import { useHabitsStore } from '../model/useHabitsStore';
@@ -26,6 +25,7 @@ type HabitListItem = {
 };
 
 export const HabitsListScreen: React.FC = () => {
+  const { colors } = useTheme();
   const habits = useHabitsStore((s) => s.habits);
   const addHabit = useHabitsStore((s) => s.addHabit);
   const updateHabit = useHabitsStore((s) => s.updateHabit);
@@ -41,18 +41,8 @@ export const HabitsListScreen: React.FC = () => {
   };
 
   const handleDeleteHabit = (habitId: string) => {
-    Alert.alert(
-      'Удалить привычку',
-      'Вы уверены, что хотите удалить эту привычку? Это действие нельзя отменить.',
-      [
-        { text: 'Отмена', style: 'cancel' },
-        { 
-          text: 'Удалить', 
-          style: 'destructive', 
-          onPress: () => removeHabit(habitId) 
-        },
-      ]
-    );
+    // Удаляем привычку без подтверждения
+    removeHabit(habitId);
   };
 
   const handleUpdateHabit = (data: {
@@ -75,9 +65,9 @@ export const HabitsListScreen: React.FC = () => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
       <View style={styles.header}>
-        <Text style={styles.title}>Мои привычки</Text>
+        <Text style={[styles.title, { color: colors.text }]}>Мои привычки</Text>
         <Button
           title="Добавить"
           onPress={() => setIsAddOpen(true)}
@@ -123,7 +113,6 @@ export const HabitsListScreen: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.background,
     paddingTop: spacing.lg,
   },
   header: {
@@ -135,7 +124,6 @@ const styles = StyleSheet.create({
   },
   title: {
     ...typography.h1,
-    color: colors.text,
   },
   listContainer: {
     gap: spacing.md,

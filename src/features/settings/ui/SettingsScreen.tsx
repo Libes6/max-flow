@@ -10,29 +10,35 @@ import {
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useTranslation } from 'react-i18next';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { colors, spacing, typography, dimensions } from '../../../shared/theme';
+import { useTheme, spacing, typography, dimensions } from '../../../shared/theme';
 import { LanguageSelector } from './LanguageSelector';
+import { ThemeSelector } from './ThemeSelector';
 
 const SettingItem: React.FC<{
   title: string;
   subtitle?: string;
   icon: string;
   onPress?: () => void;
-}> = ({ title, subtitle, icon, onPress }) => (
-  <TouchableOpacity style={styles.settingItem} onPress={onPress}>
-    <View style={styles.settingIcon}>
-      <Ionicons name={icon} size={20} color={colors.textSecondary} />
-    </View>
-    <View style={styles.settingContent}>
-      <Text style={styles.settingTitle}>{title}</Text>
-      {subtitle && <Text style={styles.settingSubtitle}>{subtitle}</Text>}
-    </View>
-    <Ionicons name="chevron-forward" size={20} color={colors.textTertiary} />
-  </TouchableOpacity>
-);
+}> = ({ title, subtitle, icon, onPress }) => {
+  const { colors } = useTheme();
+  
+  return (
+    <TouchableOpacity style={[styles.settingItem, { backgroundColor: colors.surface, borderBottomColor: colors.border }]} onPress={onPress}>
+      <View style={styles.settingIcon}>
+        <Ionicons name={icon} size={20} color={colors.textSecondary} />
+      </View>
+      <View style={styles.settingContent}>
+        <Text style={[styles.settingTitle, { color: colors.text }]}>{title}</Text>
+        {subtitle && <Text style={[styles.settingSubtitle, { color: colors.textSecondary }]}>{subtitle}</Text>}
+      </View>
+      <Ionicons name="chevron-forward" size={20} color={colors.textTertiary} />
+    </TouchableOpacity>
+  );
+};
 
 export const SettingsScreen: React.FC = () => {
   const { t } = useTranslation();
+  const { colors } = useTheme();
   
   const settingsData = [
     {
@@ -100,24 +106,35 @@ export const SettingsScreen: React.FC = () => {
 
   const renderSection = ({ item }: { item: any }) => (
     <View style={styles.section}>
-      <Text style={styles.sectionTitle}>{item.sectionTitle}</Text>
-      {item.items.map((settingItem: any, index: number) => (
-        <SettingItem
-          key={index}
-          title={settingItem.title}
-          subtitle={settingItem.subtitle}
-          icon={settingItem.icon}
-        />
-      ))}
-      {/* Добавляем селектор языка после первой секции */}
-      {item.sectionTitle === t('settings.app') && <LanguageSelector />}
+      <Text style={[styles.sectionTitle, { color: colors.textSecondary }]}>{item.sectionTitle}</Text>
+      {item.items.map((settingItem: any, index: number) => {
+        // Пропускаем элемент темы, так как он будет заменен на ThemeSelector
+        if (settingItem.title === t('settings.theme')) {
+          return null;
+        }
+        return (
+          <SettingItem
+            key={index}
+            title={settingItem.title}
+            subtitle={settingItem.subtitle}
+            icon={settingItem.icon}
+          />
+        );
+      })}
+      {/* Добавляем селекторы после первой секции */}
+      {item.sectionTitle === t('settings.app') && (
+        <>
+          <LanguageSelector />
+          <ThemeSelector />
+        </>
+      )}
     </View>
   );
 
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
       <View style={styles.header}>
-        <Text style={styles.title}>{t('settings.title')}</Text>
+        <Text style={[styles.title, { color: colors.text }]}>{t('settings.title')}</Text>
       </View>
       
       <FlatList
@@ -135,7 +152,6 @@ export const SettingsScreen: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.background,
   },
   header: {
     paddingHorizontal: spacing.lg,
@@ -143,7 +159,6 @@ const styles = StyleSheet.create({
   },
   title: {
     ...typography.h1,
-    color: colors.text,
   },
   content: {
     flex: 1,
@@ -156,7 +171,6 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     ...typography.h3,
-    color: colors.textSecondary,
     paddingHorizontal: spacing.lg,
     marginBottom: spacing.sm,
   },
@@ -165,9 +179,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: spacing.lg,
     paddingVertical: spacing.md,
-    backgroundColor: colors.surface,
     borderBottomWidth: 1,
-    borderBottomColor: colors.border,
   },
   settingIcon: {
     width: 40,
@@ -179,11 +191,9 @@ const styles = StyleSheet.create({
   },
   settingTitle: {
     ...typography.body,
-    color: colors.text,
     marginBottom: spacing.xs,
   },
   settingSubtitle: {
     ...typography.caption,
-    color: colors.textSecondary,
   },
 });
