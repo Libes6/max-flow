@@ -1,4 +1,10 @@
 export { HabitsListScreen } from './HabitsListScreen';
+export { AddHabitScreen } from './AddHabitScreen';
+export { EditHabitScreen } from './EditHabitScreen';
+export { ColorIconScreen } from './ColorIconScreen';
 export { AddHabitModal } from './AddHabitModal';
+export { AddHabitBottomSheet } from './AddHabitBottomSheet';
 export { EditHabitModal } from './EditHabitModal';
+export { EditHabitBottomSheet } from './EditHabitBottomSheet';
+export { ColorIconBottomSheet } from './ColorIconBottomSheet';
 export { HabitCard } from './HabitCard';

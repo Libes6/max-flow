@@ -11,6 +11,7 @@ interface HabitCardProps {
     description?: string;
     category?: string;
     color: string;
+    icon?: string;
   };
   onEdit: () => void;
   onDelete: () => void;
@@ -104,9 +105,17 @@ export const HabitCard: React.FC<HabitCardProps> = ({ habit, onEdit, onDelete })
           >
             <View style={styles.habitHeader}>
               <View style={[styles.habitIcon, { backgroundColor: habit.color }]}>
-                <Text style={[styles.habitIconText, { color: colors.text }]}>
-                  {habit.name.charAt(0).toUpperCase()}
-                </Text>
+                {habit.icon ? (
+                  <Ionicons 
+                    name={habit.icon as any} 
+                    size={24} 
+                    color="white" 
+                  />
+                ) : (
+                  <Text style={[styles.habitIconText, { color: colors.text }]}>
+                    {habit.name.charAt(0).toUpperCase()}
+                  </Text>
+                )}
               </View>
               <View style={styles.habitInfo}>
                 <Text style={[styles.habitName, { color: colors.text }]}>{habit.name}</Text>

@@ -2,6 +2,7 @@
   "settings": {
     "title": "Настройки",
     "app": "Приложение",
+    "account": "Аккаунт",
     "data": "Данные",
     "about": "О приложении",
     "notifications": "Уведомления",
@@ -21,6 +22,52 @@
     "privacy": "Политика конфиденциальности",
     "terms": "Условия использования"
   },
+  "profile": {
+    "title": "Профиль",
+    "app": "Приложение",
+    "account": "Аккаунт",
+    "about": "О приложении",
+    "notAuthenticated": "Не авторизован",
+    "registerNow": "Зарегистрироваться?",
+    "guestMode": "Гостевой режим",
+    "tapToLogin": "Нажмите для входа",
+    "editProfile": "Редактировать профиль",
+    "editProfileSubtitle": "Изменить личные данные",
+    "notifications": "Уведомления",
+    "notificationsSubtitle": "Настройка напоминаний",
+    "theme": "Тема",
+    "themeSubtitle": "Темная тема",
+    "version": "Версия"
+  },
+  "auth": {
+    "welcome": "Добро пожаловать",
+    "chooseMethod": "Выберите способ авторизации",
+    "emailAuth": "Электронная почта",
+    "emailAuthSubtitle": "Войти с помощью email и пароля",
+    "googleAuth": "Google",
+    "googleAuthSubtitle": "Быстрая авторизация через Google",
+    "continueWithoutAuth": "Продолжить без авторизации",
+    "continueWithoutAuthSubtitle": "Использовать приложение локально",
+    "required": "Требуется авторизация",
+    "loginRequired": "Для синхронизации необходимо войти в аккаунт",
+    "createAccount": "Создать аккаунт",
+    "signIn": "Войти",
+    "register": "Зарегистрироваться",
+    "firstName": "Имя",
+    "firstNamePlaceholder": "Введите ваше имя",
+    "lastName": "Фамилия",
+    "lastNamePlaceholder": "Введите вашу фамилию",
+    "email": "Email",
+    "emailPlaceholder": "Введите ваш email",
+    "password": "Пароль",
+    "passwordPlaceholder": "Введите пароль",
+    "confirmPassword": "Подтвердите пароль",
+    "confirmPasswordPlaceholder": "Повторите пароль",
+    "alreadyHaveAccount": "Уже есть аккаунт?",
+    "dontHaveAccount": "Нет аккаунта?",
+    "registrationSuccess": "Успешная регистрация",
+    "registrationSuccessMessage": "Ваш аккаунт успешно создан!"
+  },
   "themes": {
     "light": "Светлая",
     "dark": "Темная",
@@ -34,13 +81,35 @@
     "kk": "Қазақша"
   },
   "habits": {
+    "title": "Мои привычки",
     "morningExercise": "Утренняя зарядка",
     "morningExerciseDesc": "15 минут упражнений",
     "reading": "Чтение",
     "readingDesc": "30 минут в день",
     "health": "Здоровье",
     "learning": "Обучение",
-    "general": "Общее"
+    "general": "Общее",
+    "createHabit": "Новая привычка",
+    "editHabit": "Редактировать привычку",
+    "colorAndIcon": "Цвет и иконка",
+    "habitName": "Название",
+    "habitNamePlaceholder": "Введите название привычки",
+    "habitDescription": "Описание",
+    "habitDescriptionPlaceholder": "Описание привычки (необязательно)",
+    "habitCategory": "Категория",
+    "habitCategoryPlaceholder": "Категория привычки",
+    "colorIconButton": "Цвет и иконка",
+    "cancel": "Отмена",
+    "save": "Сохранить",
+    "delete": "Удалить",
+    "done": "Готово",
+    "color": "Цвет",
+    "icon": "Иконка",
+    "deleteConfirmTitle": "Удалить привычку",
+    "deleteConfirmMessage": "Вы уверены, что хотите удалить эту привычку?",
+    "deleteConfirmCancel": "Отмена",
+    "deleteConfirmDelete": "Удалить",
+    "nameRequired": "Введите название привычки"
   },
   "common": {
     "save": "Сохранить",
@@ -54,7 +123,7 @@
     "habits": "Привычки",
     "history": "История",
     "statistics": "Статистика",
-    "settings": "Настройки"
+    "profile": "Профиль"
   },
   "today": {
     "title": "Сегодня",
@@ -132,5 +201,14 @@
     "showMonth": "Показать месяц",
     "dragUpForMonth": "Потяните вверх для месяца",
     "dragDownForWeek": "Потяните вниз для недели"
+  },
+
+  "common": {
+    "save": "Сохранить",
+    "cancel": "Отмена",
+    "ok": "ОК",
+    "close": "Закрыть",
+    "select": "Выбрать",
+    "confirm": "Подтвердить"
   }
 }

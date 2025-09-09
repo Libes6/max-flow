@@ -14,7 +14,6 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useTheme, spacing, typography, dimensions } from '../../../shared/theme';
 import { useHabitsStore } from '../../habits/model/useHabitsStore';
 import { useStatisticsStore } from '../../statistics/model/useStatisticsStore';
-import { EditHabitModal } from '../../habits/ui/EditHabitModal';
 import { Habit } from '../../../shared/types';
 import { format } from 'date-fns';
 import { ru, en, uk, kk } from 'date-fns/locale';
@@ -23,20 +22,27 @@ const HabitCard: React.FC<{
   habit: Habit;
   isCompleted: boolean;
   onToggle: () => void;
-  onEdit: () => void;
-}> = ({ habit, isCompleted, onToggle, onEdit }) => {
+}> = ({ habit, isCompleted, onToggle }) => {
   const { colors } = useTheme();
 
   return (
     <TouchableOpacity 
       style={[styles.habitCard, { backgroundColor: colors.surface, borderColor: colors.border }]}
-      onPress={onEdit}
+      onPress={onToggle}
     >
       <View style={styles.habitHeader}>
         <View style={[styles.habitIcon, { backgroundColor: habit.color }]}>
-          <Text style={[styles.habitIconText, { color: colors.text }]}>
-            {habit.name.charAt(0).toUpperCase()}
-          </Text>
+          {habit.icon ? (
+            <Ionicons 
+              name={habit.icon as any} 
+              size={20} 
+              color="white" 
+            />
+          ) : (
+            <Text style={[styles.habitIconText, { color: colors.text }]}>
+              {habit.name.charAt(0).toUpperCase()}
+            </Text>
+          )}
         </View>
         <View style={styles.habitInfo}>
           <Text style={[styles.habitName, { color: colors.text }]}>{habit.name}</Text>
@@ -50,16 +56,11 @@ const HabitCard: React.FC<{
       </View>
       
       <View style={styles.habitActions}>
-        <TouchableOpacity
-          style={styles.completeButton}
-          onPress={onToggle}
-        >
-          <Ionicons
-            name={isCompleted ? 'checkmark-circle' : 'ellipse-outline'}
-            size={24}
-            color={isCompleted ? colors.success : colors.textSecondary}
-          />
-        </TouchableOpacity>
+        <Ionicons
+          name={isCompleted ? 'checkmark-circle' : 'ellipse-outline'}
+          size={20}
+          color={isCompleted ? colors.success : colors.textSecondary}
+        />
       </View>
     </TouchableOpacity>
   );
@@ -69,11 +70,7 @@ export const TodayScreen: React.FC = () => {
   const { t, i18n } = useTranslation();
   const { colors } = useTheme();
   const habits = useHabitsStore((s) => s.habits);
-  const updateHabit = useHabitsStore((s) => s.updateHabit);
   const { habitCompletions, markHabitCompleted, markHabitIncomplete } = useStatisticsStore();
-  
-  const [isEditOpen, setIsEditOpen] = useState(false);
-  const [selectedHabit, setSelectedHabit] = useState<Habit | null>(null);
   
   // Получаем сегодняшнюю дату в формате YYYY-MM-DD
   const today = new Date().toISOString().split('T')[0];
@@ -108,21 +105,6 @@ export const TodayScreen: React.FC = () => {
     }
   };
 
-  const handleEditHabit = (habit: Habit) => {
-    setSelectedHabit(habit);
-    setIsEditOpen(true);
-  };
-
-  const handleUpdateHabit = (data: {
-    name: string;
-    description?: string;
-    category?: string;
-    color?: string;
-  }) => {
-    if (selectedHabit) {
-      updateHabit(selectedHabit.id, data);
-    }
-  };
 
   const completedCount = habits.filter(habit => getHabitCompletionStatus(habit.id)).length;
   const totalCount = habits.length;
@@ -164,7 +146,6 @@ export const TodayScreen: React.FC = () => {
             habit={item}
             isCompleted={getHabitCompletionStatus(item.id)}
             onToggle={() => toggleHabit(item.id)}
-            onEdit={() => handleEditHabit(item)}
           />
         )}
                  ListHeaderComponent={() => (
@@ -193,20 +174,6 @@ export const TodayScreen: React.FC = () => {
         showsVerticalScrollIndicator={false}
         style={styles.content}
       />
-
-      <EditHabitModal
-        visible={isEditOpen}
-        habit={selectedHabit}
-        onClose={() => {
-          setIsEditOpen(false);
-          setSelectedHabit(null);
-        }}
-        onSubmit={handleUpdateHabit}
-        onDelete={() => {
-          // Удаление из экрана "Сегодня" не поддерживается
-          // Для удаления привычки перейдите в раздел "Привычки"
-        }}
-      />
     </SafeAreaView>
   );
 };
@@ -220,7 +187,7 @@ const styles = StyleSheet.create({
     paddingVertical: spacing.md,
   },
   title: {
-    ...typography.h1,
+    ...typography.h2,
     marginBottom: spacing.xs,
   },
   subtitle: {
@@ -255,6 +222,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   scrollContent: {
+    paddingHorizontal: spacing.lg,
     paddingBottom: Platform.OS === 'ios' ? spacing.xl : spacing.xl + dimensions.androidBottomPadding,
   },
   section: {
@@ -265,9 +233,9 @@ const styles = StyleSheet.create({
     marginBottom: spacing.md,
   },
   habitCard: {
-    borderRadius: 12,
-    padding: spacing.lg,
-    marginBottom: spacing.md,
+    borderRadius: 10,
+    padding: spacing.md,
+    marginBottom: spacing.sm,
     borderWidth: 1,
     flexDirection: 'row',
     alignItems: 'center',
@@ -278,15 +246,15 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   habitIcon: {
-    width: 48,
-    height: 48,
-    borderRadius: 24,
+    width: 40,
+    height: 40,
+    borderRadius: 20,
     alignItems: 'center',
     justifyContent: 'center',
-    marginRight: spacing.md,
+    marginRight: spacing.sm,
   },
   habitIconText: {
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: 'bold',
   },
   habitInfo: {
@@ -306,10 +274,6 @@ const styles = StyleSheet.create({
   habitActions: {
     flexDirection: 'row',
     alignItems: 'center',
-  },
-  
-  completeButton: {
-    padding: spacing.sm,
   },
   emptyState: {
     alignItems: 'center',

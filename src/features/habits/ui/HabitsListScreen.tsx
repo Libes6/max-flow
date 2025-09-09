@@ -1,19 +1,22 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   View,
   Text,
   StyleSheet,
   FlatList,
   Platform,
+  TouchableOpacity,
 } from 'react-native';
 
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useNavigation } from '@react-navigation/native';
+import { useTranslation } from 'react-i18next';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useTheme, spacing, typography, dimensions } from '../../../shared/theme';
 import { Button } from '../../../shared/ui';
 import { HabitCard } from './HabitCard';
-import { useHabitsStore } from '../model/useHabitsStore';
-import { AddHabitModal } from './AddHabitModal';
-import { EditHabitModal } from './EditHabitModal';
+import { useHabitsSync } from '../hooks/useHabitsSync';
+import { HabitsStackParamList } from '../../../app/navigation/types';
 import { Habit } from '../../../shared/types';
 
 type HabitListItem = {
@@ -22,22 +25,38 @@ type HabitListItem = {
   description?: string;
   category?: string;
   color: string;
+  icon?: string;
 };
 
 export const HabitsListScreen: React.FC = () => {
-  const { colors } = useTheme();
-  const habits = useHabitsStore((s) => s.habits);
-  const addHabit = useHabitsStore((s) => s.addHabit);
-  const updateHabit = useHabitsStore((s) => s.updateHabit);
-  const removeHabit = useHabitsStore((s) => s.removeHabit);
-  
-  const [isAddOpen, setIsAddOpen] = useState(false);
-  const [isEditOpen, setIsEditOpen] = useState(false);
-  const [selectedHabit, setSelectedHabit] = useState<Habit | null>(null);
+  const navigation = useNavigation<any>();
+  const { t } = useTranslation();
+  const { colors, isDark } = useTheme();
+  const insets = useSafeAreaInsets();
+  const { 
+    habits, 
+    removeHabit
+  } = useHabitsSync();
+
+  // Определяем тип навигации на Android
+  const isGestureNavigation = Platform.OS === 'android' && insets.bottom === 0;
+  const isButtonNavigation = Platform.OS === 'android' && insets.bottom > 0;
+
+  // Вычисляем правильные отступы
+  const fabBottomOffset = Platform.OS === 'ios' 
+    ? 120 + insets.bottom
+    : isGestureNavigation 
+      ? 120 
+      : 120 + insets.bottom;
+
+  const listBottomPadding = Platform.OS === 'ios' 
+    ? 140 + insets.bottom
+    : isGestureNavigation 
+      ? 140 
+      : 140 + insets.bottom;
 
   const handleEditHabit = (habit: Habit) => {
-    setSelectedHabit(habit);
-    setIsEditOpen(true);
+    navigation.navigate('EditHabit', { habitId: habit.id });
   };
 
   const handleDeleteHabit = (habitId: string) => {
@@ -45,34 +64,14 @@ export const HabitsListScreen: React.FC = () => {
     removeHabit(habitId);
   };
 
-  const handleUpdateHabit = (data: {
-    name: string;
-    description?: string;
-    category?: string;
-    color?: string;
-  }) => {
-    if (selectedHabit) {
-      updateHabit(selectedHabit.id, data);
-    }
-  };
-
-  const handleDeleteFromModal = () => {
-    if (selectedHabit) {
-      removeHabit(selectedHabit.id);
-      setIsEditOpen(false);
-      setSelectedHabit(null);
-    }
+  const handleAddHabit = () => {
+    navigation.navigate('CreateHabit');
   };
 
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
       <View style={styles.header}>
-        <Text style={[styles.title, { color: colors.text }]}>Мои привычки</Text>
-        <Button
-          title="Добавить"
-          onPress={() => setIsAddOpen(true)}
-          size="small"
-        />
+        <Text style={[styles.title, { color: colors.text }]}>{t('habits.title')}</Text>
       </View>
 
       <FlatList
@@ -85,27 +84,30 @@ export const HabitsListScreen: React.FC = () => {
           />
         )}
         keyExtractor={(item) => item.id}
-        contentContainerStyle={styles.listContainer}
+        contentContainerStyle={[
+          styles.listContainer,
+          { paddingBottom: listBottomPadding }
+        ]}
         showsVerticalScrollIndicator={false}
         style={styles.flatList}
       />
 
-      <AddHabitModal
-        visible={isAddOpen}
-        onClose={() => setIsAddOpen(false)}
-        onSubmit={(data) => addHabit(data)}
-      />
+      {/* Плавающая кнопка добавления */}
+      <TouchableOpacity
+        style={[
+          styles.fab, 
+          { 
+            backgroundColor: colors.primary,
+            shadowColor: colors.text,
+            bottom: fabBottomOffset,
+          }
+        ]}
+        onPress={handleAddHabit}
+        activeOpacity={0.8}
+      >
+        <Ionicons name="add" size={24} color={isDark ? '#ffffff' : '#1e1b4b'} />
+      </TouchableOpacity>
 
-      <EditHabitModal
-        visible={isEditOpen}
-        habit={selectedHabit}
-        onClose={() => {
-          setIsEditOpen(false);
-          setSelectedHabit(null);
-        }}
-        onSubmit={handleUpdateHabit}
-        onDelete={handleDeleteFromModal}
-      />
     </SafeAreaView>
   );
 };
@@ -113,22 +115,35 @@ export const HabitsListScreen: React.FC = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: spacing.lg,
+    paddingTop: spacing.xs,
   },
   header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
     paddingHorizontal: spacing.lg,
-    marginBottom: spacing.lg,
+    paddingVertical: spacing.md,
+    marginBottom: spacing.md,
   },
   title: {
-    ...typography.h1,
+    ...typography.h2,
+  },
+  fab: {
+    position: 'absolute',
+    right: spacing.lg,
+    width: 56,
+    height: 56,
+    borderRadius: 28,
+    justifyContent: 'center',
+    alignItems: 'center',
+    elevation: 2,
+    shadowOffset: {
+      width: 2,
+      height: 2,
+    },
+    shadowOpacity: 0.3,
+    shadowRadius: 3.65,
   },
   listContainer: {
     gap: spacing.md,
     paddingHorizontal: spacing.lg,
-    paddingBottom: Platform.OS === 'ios' ? spacing.xl : spacing.xl + dimensions.androidBottomPadding,
   },
   flatList: {
     flexGrow: 1,

@@ -3,20 +3,25 @@ import { persist, createJSONStorage } from 'zustand/middleware';
 import { colors } from '../../../shared/theme';
 import type { Habit } from '../../../shared/types';
 import { mmkvStorageAdapter } from '../../../shared/lib/mmkv';
+import { generateUUID } from '../../../shared/lib/uuid';
 
 export interface HabitsState {
     habits: Habit[];
+    currentUserId: string;
+    setUserId: (userId: string) => void;
     addHabit: (input: {
         name: string;
         description?: string;
         category?: string;
         color?: string;
+        icon?: string;
     }) => void;
     updateHabit: (habitId: string, input: {
         name?: string;
         description?: string;
         category?: string;
         color?: string;
+        icon?: string;
         isActive?: boolean;
     }) => void;
     removeHabit: (habitId: string) => void;
@@ -26,46 +31,20 @@ export interface HabitsState {
 export const useHabitsStore = create<HabitsState>()(
     persist(
         (set, get) => ({
-            habits: [
-                {
-                    id: '1',
-                    userId: 'local',
-                    name: 'Утренняя зарядка',
-                    description: '15 минут упражнений',
-                    category: 'Здоровье',
-                    icon: 'list',
-                    color: colors.primary,
-                    frequency: 'daily',
-                    target: undefined,
-                    unit: undefined,
-                    isActive: true,
-                    createdAt: new Date(),
-                    updatedAt: new Date(),
-                },
-                {
-                    id: '2',
-                    userId: 'local',
-                    name: 'Чтение',
-                    description: '30 минут в день',
-                    category: 'Обучение',
-                    icon: 'book',
-                    color: colors.success,
-                    frequency: 'daily',
-                    target: undefined,
-                    unit: undefined,
-                    isActive: true,
-                    createdAt: new Date(),
-                    updatedAt: new Date(),
-                },
-            ],
-            addHabit: ({ name, description, category, color }) => {
+            habits: [],
+            currentUserId: 'local',
+            setUserId: (userId: string) => {
+                set({ currentUserId: userId });
+            },
+            addHabit: ({ name, description, category, color, icon }) => {
+                const { currentUserId } = get();
                 const newHabit: Habit = {
-                    id: Date.now().toString(),
-                    userId: 'local',
+                    id: generateUUID(),
+                    userId: currentUserId,
                     name: name.trim(),
                     description: description?.trim(),
                     category: category?.trim() || 'Общее',
-                    icon: 'list',
+                    icon: icon || 'list',
                     color: color || colors.primary,
                     frequency: 'daily',
                     target: undefined,
@@ -83,8 +62,9 @@ export const useHabitsStore = create<HabitsState>()(
                 if (habitIndex === -1) return;
 
                 const updatedHabits = [...habits];
+                const currentHabit = updatedHabits[habitIndex];
                 updatedHabits[habitIndex] = {
-                    ...updatedHabits[habitIndex],
+                    ...currentHabit,
                     ...input,
                     updatedAt: new Date(),
                 };
@@ -92,7 +72,15 @@ export const useHabitsStore = create<HabitsState>()(
                 set({ habits: updatedHabits });
             },
             removeHabit: (habitId: string) => {
-                set({ habits: get().habits.filter((h) => h.id !== habitId) });
+                const { habits } = get();
+                const habitToRemove = habits.find(h => h.id === habitId);
+                
+                if (habitToRemove) {
+                    // Добавляем операцию удаления в очередь синхронизации
+                    // TODO: Интегрировать с useSync
+                }
+                
+                set({ habits: habits.filter((h) => h.id !== habitId) });
             },
             clearHabits: () => {
                 set({ habits: [] });
@@ -101,7 +89,10 @@ export const useHabitsStore = create<HabitsState>()(
         {
             name: 'habits-store',
             storage: createJSONStorage(() => mmkvStorageAdapter),
-            partialize: (state) => ({ habits: state.habits }),
+            partialize: (state) => ({ 
+                habits: state.habits,
+                currentUserId: state.currentUserId 
+            }),
         }
     )
 );

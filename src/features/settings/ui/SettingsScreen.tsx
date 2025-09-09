@@ -13,7 +13,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useTheme, spacing, typography, dimensions } from '../../../shared/theme';
 import { LanguageSelector } from './LanguageSelector';
 import { ThemeSelector } from './ThemeSelector';
-import { SupabaseTestButton } from './SupabaseTestButton';
+
 
 const SettingItem: React.FC<{
   title: string;
@@ -45,7 +45,6 @@ export const SettingsScreen: React.FC = () => {
     {
       sectionTitle: t('settings.app'),
       items: [
-
         {
           title: t('settings.theme'),
           subtitle: t('settings.themeSubtitle'),
@@ -53,6 +52,7 @@ export const SettingsScreen: React.FC = () => {
         },
       ],
     },
+
     // {
     //   sectionTitle: t('settings.data'),
     //   items: [
@@ -102,36 +102,38 @@ export const SettingsScreen: React.FC = () => {
   );
 
   const renderSection = ({ item }: { item: any }) => (
-    <View style={styles.section}>
-      <Text style={[styles.sectionTitle, { color: colors.textSecondary }]}>{item.sectionTitle}</Text>
-      {item.items.map((settingItem: any, index: number) => {
-        // Пропускаем элемент темы, так как он будет заменен на ThemeSelector
-        if (settingItem.title === t('settings.theme')) {
-          return null;
-        }
-        return (
-          <SettingItem
-            key={index}
-            title={settingItem.title}
-            subtitle={settingItem.subtitle}
-            icon={settingItem.icon}
-          />
-        );
-      })}
-                  {/* Добавляем селекторы после первой секции */}
-            {item.sectionTitle === t('settings.app') && (
-              <>
-                <LanguageSelector />
-                <ThemeSelector />
-                <SupabaseTestButton />
-              </>
-            )}
-    </View>
+      <View style={styles.section}>
+        <Text style={[styles.sectionTitle, { color: colors.textSecondary }]}>{item.sectionTitle}</Text>
+        <Text style={[styles.sectionTitle, { color: colors.textSecondary }]}>{item.sectionTitle}</Text>
+        <Text style={[styles.sectionTitle, { color: colors.textSecondary }]}>{item.sectionTitle}</Text>
+        {item.items.map((settingItem: any, index: number) => {
+          // Пропускаем элемент темы, так как он будет заменен на ThemeSelector
+          if (settingItem.title === t('settings.theme')) {
+            return null;
+          }
+          return (
+            <SettingItem
+              key={index}
+              title={settingItem.title}
+              subtitle={settingItem.subtitle}
+              icon={settingItem.icon}
+            />
+          );
+        })}
+                    {/* Добавляем селекторы после первой секции */}
+              {item.sectionTitle === t('settings.app') && (
+                <>
+                  <LanguageSelector />
+                  <ThemeSelector />
+                </>
+              )}
+      </View>
   );
 
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
       <View style={styles.header}>
+        <Text style={[styles.title, { color: colors.text }]}>{t('settings.title')}</Text>
         <Text style={[styles.title, { color: colors.text }]}>{t('settings.title')}</Text>
       </View>
       
@@ -156,7 +158,7 @@ const styles = StyleSheet.create({
     paddingVertical: spacing.md,
   },
   title: {
-    ...typography.h1,
+    ...typography.h2,
   },
   content: {
     flex: 1,

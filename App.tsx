@@ -4,7 +4,7 @@ import React from 'react';
 import { StatusBar, useColorScheme } from 'react-native';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-import { AppSafeAreaProvider, QueryProvider, LanguageProvider } from './src/app/providers';
+import { AppSafeAreaProvider, QueryProvider, LanguageProvider, NavigationProvider, ProfileProvider } from './src/app/providers';
 import { RootNavigator } from './src/app/navigation';
 import { GlobalBottomSheetProvider } from './src/shared/ui/GlobalBottomSheet';
 import './src/shared/lib/i18n';
@@ -22,10 +22,14 @@ function App() {
                 <AppSafeAreaProvider>
                     <QueryProvider>
                         <LanguageProvider>
-                            <GlobalBottomSheetProvider>
-                                <RootNavigator />
-                                <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-                            </GlobalBottomSheetProvider>
+                            <NavigationProvider>
+                                <ProfileProvider>
+                                    <GlobalBottomSheetProvider>
+                                        <RootNavigator />
+                                        <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
+                                    </GlobalBottomSheetProvider>
+                                </ProfileProvider>
+                            </NavigationProvider>
                         </LanguageProvider>
                     </QueryProvider>
                 </AppSafeAreaProvider>

@@ -185,7 +185,7 @@ const styles = StyleSheet.create({
     paddingVertical: spacing.md,
   },
   title: {
-    ...typography.h1,
+    ...typography.h2,
     marginBottom: spacing.xs,
   },
   subtitle: {
@@ -222,7 +222,7 @@ const styles = StyleSheet.create({
     marginBottom: spacing.sm,
   },
   statNumber: {
-    ...typography.h1,
+    ...typography.h2,
     marginBottom: spacing.xs,
   },
   statLabel: {

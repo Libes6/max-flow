@@ -25,10 +25,7 @@ export const ThemeSelector: React.FC = () => {
   const themeOptions = getThemeOptions(t);
 
   const handleThemeSelect = (value: string) => {
-    console.log('ThemeSelector: handleThemeSelect called with value:', value);
-    console.log('ThemeSelector: current theme before change:', theme);
     setTheme(value as 'light' | 'dark');
-    console.log('ThemeSelector: theme changed to:', value);
   };
 
   return (

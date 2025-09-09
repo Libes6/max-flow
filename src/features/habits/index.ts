@@ -6,3 +6,6 @@ export { EditHabitModal } from './ui/EditHabitModal';
 
 // Models
 export { useHabitsStore } from './model/useHabitsStore';
+
+// Hooks
+export { useHabitsSync } from './hooks/useHabitsSync';

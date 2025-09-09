@@ -3,6 +3,7 @@ import { BottomSheetComponent, BottomSheetRef } from './BottomSheet';
 
 interface GlobalBottomSheetContextType {
   openBottomSheet: (title: string, content: ReactNode) => void;
+  updateBottomSheetContent: (content: ReactNode) => void;
   closeBottomSheet: () => void;
 }
 
@@ -44,6 +45,10 @@ export const GlobalBottomSheetProvider: React.FC<GlobalBottomSheetProviderProps>
     setIsVisible(true);
   };
 
+  const updateBottomSheetContent = (newContent: ReactNode) => {
+    setContent(newContent);
+  };
+
   const closeBottomSheet = () => {
     setIsVisible(false);
     bottomSheetRef.current?.close();
@@ -54,10 +59,9 @@ export const GlobalBottomSheetProvider: React.FC<GlobalBottomSheetProviderProps>
   };
 
   return (
-    <GlobalBottomSheetContext.Provider value={{ openBottomSheet, closeBottomSheet }}>
+    <GlobalBottomSheetContext.Provider value={{ openBottomSheet, updateBottomSheetContent, closeBottomSheet }}>
       {children}
       
-      {/* Глобальный BottomSheet рендерится здесь */}
       {isVisible && (
         <BottomSheetComponent
           ref={bottomSheetRef}

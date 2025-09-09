@@ -1,5 +1,5 @@
 import React, { forwardRef, useImperativeHandle, useRef, useMemo, useCallback, useState } from 'react';
-import { View, Text, StyleSheet, Dimensions, Platform } from 'react-native';
+import { View, Text, StyleSheet, Dimensions, Platform, ScrollView } from 'react-native';
 import BottomSheet, { BottomSheetView, BottomSheetBackdrop } from '@gorhom/bottom-sheet';
 import { useTheme } from '../theme';
 import { spacing, typography, dimensions } from '../theme';
@@ -144,6 +144,8 @@ export const BottomSheetComponent = forwardRef<BottomSheetRef, BottomSheetProps>
         backgroundStyle={{ backgroundColor: colors.background }}
         handleIndicatorStyle={{ backgroundColor: colors.border }}
         style={styles.bottomSheet}
+        enableContentPanningGesture={false}
+        enableHandlePanningGesture={true}
       >
         <BottomSheetView style={styles.container}>
           {/* Header */}
@@ -154,7 +156,10 @@ export const BottomSheetComponent = forwardRef<BottomSheetRef, BottomSheetProps>
           </View>
           
           {/* Content */}
-          <View style={styles.content} onLayout={handleContentLayout}>
+          <View 
+            style={styles.content} 
+            onLayout={handleContentLayout}
+          >
             {children}
           </View>
         </BottomSheetView>
@@ -168,9 +173,11 @@ const styles = StyleSheet.create({
     // Убеждаемся, что BottomSheet рендерится поверх всего
     elevation: 1000,
     zIndex: 1000,
+    
   },
   container: {
     flex: 1,
+    paddingBottom: Platform.OS === 'ios' ? spacing.md : spacing.md + dimensions.androidBottomSheetPadding,
   },
   header: {
     flexDirection: 'row',
@@ -190,7 +197,6 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: spacing.lg,
     paddingTop: spacing.md,
-    // Учитываем системные отступы Android для жестов навигации
-    paddingBottom: Platform.OS === 'ios' ? spacing.md : spacing.md + dimensions.androidBottomSheetPadding,
+    paddingBottom: spacing.xl,
   },
 });

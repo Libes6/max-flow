@@ -39,14 +39,14 @@ export const useStatisticsStore = create<StatisticsState>()(
       
       markHabitCompleted: (habitId: string, date: string) => {
         const { habitCompletions } = get();
-        const habitData = habitCompletions[habitId] || [];
+        const habitData = [...(habitCompletions[habitId] || [])];
         
         // Проверяем, есть ли уже запись на эту дату
         const existingIndex = habitData.findIndex(entry => entry.date === date);
         
         if (existingIndex >= 0) {
           // Обновляем существующую запись
-          habitData[existingIndex].completed = true;
+          habitData[existingIndex] = { ...habitData[existingIndex], completed: true };
         } else {
           // Добавляем новую запись
           habitData.push({ habitId, date, completed: true });
@@ -62,12 +62,12 @@ export const useStatisticsStore = create<StatisticsState>()(
       
       markHabitIncomplete: (habitId: string, date: string) => {
         const { habitCompletions } = get();
-        const habitData = habitCompletions[habitId] || [];
+        const habitData = [...(habitCompletions[habitId] || [])];
         
         const existingIndex = habitData.findIndex(entry => entry.date === date);
         
         if (existingIndex >= 0) {
-          habitData[existingIndex].completed = false;
+          habitData[existingIndex] = { ...habitData[existingIndex], completed: false };
         } else {
           habitData.push({ habitId, date, completed: false });
         }

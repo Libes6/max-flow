@@ -7,6 +7,7 @@ if (Platform.OS !== 'web') {
 }
 import { createClient } from '@supabase/supabase-js';
 import config from './config';
+import { mmkvStorageAdapter } from './mmkv';
 
 // Создание Supabase клиента
 export const supabase = createClient(
@@ -14,6 +15,8 @@ export const supabase = createClient(
   config.supabase.anonKey,
   {
     auth: {
+      // Используем MMKV для хранения сессий
+      storage: mmkvStorageAdapter,
       // Автоматическое обновление токенов
       autoRefreshToken: true,
       // Сохранение сессии
@@ -25,8 +28,9 @@ export const supabase = createClient(
     global: {
       headers: {
         'X-Client-Info': 'flow-max-react-native',
-      },
+      },fetch:fetch
     },
+    
     // Настройки real-time
     realtime: {
       params: {

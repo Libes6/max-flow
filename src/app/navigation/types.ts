@@ -4,6 +4,10 @@ export type RootStackParamList = {
   Splash: undefined;
   Main: undefined;
   Onboarding: undefined;
+  Auth: undefined;
+  Login: undefined;
+  Register: undefined;
+  EditProfile: undefined;
 };
 
 export type MainTabParamList = {
@@ -11,7 +15,7 @@ export type MainTabParamList = {
   Today: undefined;
   History: undefined;
   Statistics: undefined;
-  Settings: undefined;
+  Profile: undefined;
 };
 
 export type HabitsStackParamList = {
@@ -19,6 +23,12 @@ export type HabitsStackParamList = {
   HabitDetails: { habitId: string };
   CreateHabit: undefined;
   EditHabit: { habitId: string };
+  ColorIcon: { 
+    selectedColor: string; 
+    selectedIcon: string;
+    onColorChange: (color: string) => void;
+    onIconChange: (icon: string) => void;
+  };
 };
 
 export type TodayStackParamList = {
@@ -32,8 +42,9 @@ export type StatisticsStackParamList = {
   Achievements: undefined;
 };
 
-export type SettingsStackParamList = {
+export type ProfileStackParamList = {
   UserProfile: undefined;
+  EditProfile: undefined;
   Notifications: undefined;
   DataManagement: undefined;
   About: undefined;
