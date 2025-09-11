@@ -2,6 +2,7 @@ import React, { useMemo } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { BottomSheetFlatList } from '@gorhom/bottom-sheet';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import { useTranslation } from 'react-i18next';
 import { useTheme, spacing, typography } from '../theme';
 import { FlatList } from 'react-native-gesture-handler';
 
@@ -30,6 +31,7 @@ export const DayHabitsBottomSheet: React.FC<DayHabitsBottomSheetProps> = ({
   habitCompletions,
   onToggleHabit,
 }) => {
+  const { t, i18n } = useTranslation();
   const { colors } = useTheme();
 
   const formatDate = (date: Date) => {
@@ -38,7 +40,7 @@ export const DayHabitsBottomSheet: React.FC<DayHabitsBottomSheetProps> = ({
       day: 'numeric',
       month: 'long',
     };
-    return date.toLocaleDateString('ru-RU', options);
+    return date.toLocaleDateString(i18n.language, options);
   };
 
   const dayHabits = useMemo(() => {
@@ -104,11 +106,8 @@ export const DayHabitsBottomSheet: React.FC<DayHabitsBottomSheetProps> = ({
   return (
     <View style={[styles.container, { backgroundColor: colors.background }]}>
       <View style={styles.header}>
-        <Text style={[styles.dateText, { color: colors.text }]}>
-          {formatDate(date)}
-        </Text>
         <Text style={[styles.progressText, { color: colors.textSecondary }]}>
-          Выполнено: {completedCount} из {totalCount}
+          {t('history.completed')}: {completedCount} {t('history.of')} {totalCount}
         </Text>
       </View>
 
@@ -126,7 +125,7 @@ export const DayHabitsBottomSheet: React.FC<DayHabitsBottomSheetProps> = ({
         <View style={styles.emptyState}>
           <Ionicons name="calendar-outline" size={48} color={colors.textSecondary} />
           <Text style={[styles.emptyText, { color: colors.textSecondary }]}>
-            Нет привычек на этот день
+            {t('history.noHabitsForDay')}
           </Text>
         </View>
       )}  

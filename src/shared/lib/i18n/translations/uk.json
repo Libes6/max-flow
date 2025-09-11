@@ -21,9 +21,59 @@
     "privacy": "Політика конфіденційності",
     "terms": "Умови використання"
   },
+  "profile": {
+    "title": "Профіль",
+    "app": "Додаток",
+    "account": "Акаунт",
+    "about": "Про додаток",
+    "notAuthenticated": "Не авторизований",
+    "registerNow": "Зареєструватися?",
+    "guestMode": "Гостовий режим",
+    "tapToLogin": "Натисніть для входу",
+    "editProfile": "Редагувати профіль",
+    "editProfileSubtitle": "Змінити особисті дані",
+    "notifications": "Сповіщення",
+    "notificationsSubtitle": "Налаштування нагадувань",
+    "visualEffects": "Візуальні ефекти",
+    "visualEffectsSubtitle": "Ефекти при виконанні звичок",
+    "theme": "Тема",
+    "themeSubtitle": "Темна тема",
+    "version": "Версія",
+    "guestModeDescription": "Використовуйте додаток без реєстрації",
+    "exitGuestMode": "Вийти з гостевого режиму"
+  },
+  "auth": {
+    "welcome": "Ласкаво просимо",
+    "chooseMethod": "Оберіть спосіб авторизації",
+    "emailAuth": "Електронна пошта",
+    "emailAuthSubtitle": "Увійти за допомогою email та пароля",
+    "googleAuth": "Google",
+    "googleAuthSubtitle": "Швидка авторизація через Google",
+    "createAccount": "Створити акаунт",
+    "signIn": "Увійти",
+    "register": "Зареєструватися",
+    "firstName": "Ім'я",
+    "firstNamePlaceholder": "Введіть ваше ім'я",
+    "lastName": "Прізвище",
+    "lastNamePlaceholder": "Введіть ваше прізвище",
+    "email": "Електронна пошта",
+    "emailPlaceholder": "Введіть вашу пошту",
+    "password": "Пароль",
+    "passwordPlaceholder": "Введіть пароль",
+    "confirmPassword": "Підтвердіть пароль",
+    "confirmPasswordPlaceholder": "Повторіть пароль",
+    "alreadyHaveAccount": "Вже маєте акаунт?",
+    "dontHaveAccount": "Немає акаунту?",
+    "continueWithoutAuth": "Продовжити без авторизації",
+    "continueWithoutAuthSubtitle": "Використовувати додаток локально",
+    "registrationSuccess": "Реєстрація успішна",
+    "registrationSuccessMessage": "Ваш акаунт успішно створено!"
+  },
   "themes": {
+    "system": "Системна",
     "light": "Світла",
     "dark": "Темна",
+    "systemDescription": "Слідує налаштуванням системи",
     "lightDescription": "Світла тема з синіми акцентами",
     "darkDescription": "Темна тема з фіолетовими акцентами"
   },
@@ -48,7 +98,9 @@
     "cancel": "Скасувати",
     "ok": "ОК",
     "close": "Закрити",
-    "select": "Вибрати"
+    "select": "Вибрати",
+    "enabled": "Увімкнено",
+    "disabled": "Вимкнено"
   },
   "navigation": {
     "today": "Сьогодні",
@@ -75,7 +127,10 @@
     "filterByHabit": "Фільтр за звичкою",
     "allHabits": "Всі звички",
     "deleteEntry": "Видалити запис",
-    "deleteEntryConfirm": "Ви впевнені, що хочете видалити цей запис?"
+    "deleteEntryConfirm": "Ви впевнені, що хочете видалити цей запис?",
+    "completed": "Виконано",
+    "of": "з",
+    "noHabitsForDay": "Немає звичок на цей день"
   },
   "statistics": {
     "title": "Статистика",
@@ -88,7 +143,15 @@
     "streak": "Найкраща серія",
     "averagePerDay": "В середньому на день",
     "mostProductiveDay": "Найпродуктивніший день",
-    "leastProductiveDay": "Менш продуктивний день"
+    "leastProductiveDay": "Менш продуктивний день",
+    "overallStats": "Загальна статистика",
+    "activeHabits": "Активні звички",
+    "daysInRow": "Днів поспіль",
+    "completion": "Виконання",
+    "totalCompleted": "Всього виконано",
+    "habitStats": "Статистика звичок",
+    "noDataTitle": "Дані з'являться після додавання звичок",
+    "noDataSubtitle": "Відмічайте виконання звичок, щоб бачити статистику"
   },
   "months": {
     "january": "Січень",

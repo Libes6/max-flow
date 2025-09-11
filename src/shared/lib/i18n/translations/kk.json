@@ -21,9 +21,59 @@
     "privacy": "Құпиялылық саясаты",
     "terms": "Пайдалану шарттары"
   },
+  "profile": {
+    "title": "Профиль",
+    "app": "Қолданба",
+    "account": "Аккаунт",
+    "about": "Қолданба туралы",
+    "notAuthenticated": "Авторизацияланбаған",
+    "registerNow": "Тіркелу керек пе?",
+    "guestMode": "Қонақ режимі",
+    "tapToLogin": "Кіру үшін басыңыз",
+    "editProfile": "Профильді өңдеу",
+    "editProfileSubtitle": "Жеке деректерді өзгерту",
+    "notifications": "Хабарландырулар",
+    "notificationsSubtitle": "Еске сату баптаулары",
+    "visualEffects": "Көрнекі эффектілер",
+    "visualEffectsSubtitle": "Дағдыларды орындағандағы эффектілер",
+    "theme": "Тема",
+    "themeSubtitle": "Қараңғы тема",
+    "version": "Нұсқа",
+    "guestModeDescription": "Тіркеусіз қолданбаны пайдаланыңыз",
+    "exitGuestMode": "Қонақ режимінен шығу"
+  },
+  "auth": {
+    "welcome": "Қош келдіңіз",
+    "chooseMethod": "Авторизация әдісін таңдаңыз",
+    "emailAuth": "Электрондық пошта",
+    "emailAuthSubtitle": "Email және пароль арқылы кіру",
+    "googleAuth": "Google",
+    "googleAuthSubtitle": "Google арқылы жылдам авторизация",
+    "createAccount": "Аккаунт жасау",
+    "signIn": "Кіру",
+    "register": "Тіркелу",
+    "firstName": "Аты",
+    "firstNamePlaceholder": "Атыңызды енгізіңіз",
+    "lastName": "Тегі",
+    "lastNamePlaceholder": "Тегіңізді енгізіңіз",
+    "email": "Электрондық пошта",
+    "emailPlaceholder": "Поштаңызды енгізіңіз",
+    "password": "Пароль",
+    "passwordPlaceholder": "Парольді енгізіңіз",
+    "confirmPassword": "Парольді растау",
+    "confirmPasswordPlaceholder": "Парольді қайталаңыз",
+    "alreadyHaveAccount": "Аккаунт бар ма?",
+    "dontHaveAccount": "Аккаунт жоқ па?",
+    "continueWithoutAuth": "Авторизациясыз жалғастыру",
+    "continueWithoutAuthSubtitle": "Қолданбаны жергілікті түрде пайдалану",
+    "registrationSuccess": "Тіркеу сәтті",
+    "registrationSuccessMessage": "Сіздің аккаунтыңыз сәтті жасалды!"
+  },
   "themes": {
+    "system": "Жүйелік",
     "light": "Жарық",
     "dark": "Қараңғы",
+    "systemDescription": "Жүйе параметрлерін ұстанады",
     "lightDescription": "Көк акценттермен жарық тақырып",
     "darkDescription": "Күлгін акценттермен қараңғы тақырып"
   },
@@ -48,7 +98,9 @@
     "cancel": "Болдырмау",
     "ok": "ОК",
     "close": "Жабу",
-    "select": "Таңдау"
+    "select": "Таңдау",
+    "enabled": "Қосылған",
+    "disabled": "Өшірілген"
   },
   "navigation": {
     "today": "Бүгін",
@@ -75,7 +127,10 @@
     "filterByHabit": "Дағды бойынша сүзгі",
     "allHabits": "Барлық дағдылар",
     "deleteEntry": "Жазбаны жою",
-    "deleteEntryConfirm": "Бұл жазбаны жоюға сенімдісіз бе?"
+    "deleteEntryConfirm": "Бұл жазбаны жоюға сенімдісіз бе?",
+    "completed": "Аяқталды",
+    "of": "дан",
+    "noHabitsForDay": "Осы күнге дағдылар жоқ"
   },
   "statistics": {
     "title": "Статистика",
@@ -88,7 +143,15 @@
     "streak": "Ең жақсы серия",
     "averagePerDay": "Күніне орташа",
     "mostProductiveDay": "Ең өнімді күн",
-    "leastProductiveDay": "Аз өнімді күн"
+    "leastProductiveDay": "Аз өнімді күн",
+    "overallStats": "Жалпы статистика",
+    "activeHabits": "Белсенді дағдылар",
+    "daysInRow": "Үздіксіз күндер",
+    "completion": "Аяқтау",
+    "totalCompleted": "Жалпы аяқталды",
+    "habitStats": "Дағды статистикасы",
+    "noDataTitle": "Дағдылар қосқаннан кейін деректер пайда болады",
+    "noDataSubtitle": "Статистиканы көру үшін дағдылардың орындалуын белгілеңіз"
   },
   "months": {
     "january": "Қаңтар",

@@ -35,9 +35,13 @@
     "editProfileSubtitle": "Изменить личные данные",
     "notifications": "Уведомления",
     "notificationsSubtitle": "Настройка напоминаний",
+    "visualEffects": "Визуальные эффекты",
+    "visualEffectsSubtitle": "Эффекты при выполнении привычек",
     "theme": "Тема",
     "themeSubtitle": "Темная тема",
-    "version": "Версия"
+    "version": "Версия",
+    "guestModeDescription": "Используйте приложение без регистрации",
+    "exitGuestMode": "Выйти из гостевого режима"
   },
   "auth": {
     "welcome": "Добро пожаловать",
@@ -69,8 +73,10 @@
     "registrationSuccessMessage": "Ваш аккаунт успешно создан!"
   },
   "themes": {
+    "system": "Системная",
     "light": "Светлая",
     "dark": "Темная",
+    "systemDescription": "Следует настройкам системы",
     "lightDescription": "Светлая тема с синими акцентами",
     "darkDescription": "Темная тема с фиолетовыми акцентами"
   },
@@ -143,7 +149,10 @@
     "filterByHabit": "Фильтр по привычке",
     "allHabits": "Все привычки",
     "deleteEntry": "Удалить запись",
-    "deleteEntryConfirm": "Вы уверены, что хотите удалить эту запись?"
+    "deleteEntryConfirm": "Вы уверены, что хотите удалить эту запись?",
+    "completed": "Выполнено",
+    "of": "из",
+    "noHabitsForDay": "Нет привычек на этот день"
   },
   "statistics": {
     "title": "Статистика",
@@ -156,7 +165,15 @@
     "streak": "Лучшая серия",
     "averagePerDay": "В среднем в день",
     "mostProductiveDay": "Самый продуктивный день",
-    "leastProductiveDay": "Менее продуктивный день"
+    "leastProductiveDay": "Менее продуктивный день",
+    "overallStats": "Общая статистика",
+    "activeHabits": "Активные привычки",
+    "daysInRow": "Дней подряд",
+    "completion": "Выполнение",
+    "totalCompleted": "Всего выполнено",
+    "habitStats": "Статистика привычек",
+    "noDataTitle": "Данные появятся после добавления привычек",
+    "noDataSubtitle": "Отмечайте выполнение привычек, чтобы видеть статистику"
   },
   "months": {
     "january": "Январь",
@@ -209,6 +226,8 @@
     "ok": "ОК",
     "close": "Закрыть",
     "select": "Выбрать",
-    "confirm": "Подтвердить"
+    "confirm": "Подтвердить",
+    "enabled": "Включено",
+    "disabled": "Отключено"
   }
 }

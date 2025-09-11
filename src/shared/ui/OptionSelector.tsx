@@ -3,7 +3,8 @@ import {View, Text, StyleSheet, TouchableOpacity, FlatList, Pressable} from 'rea
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useTheme } from '../theme';
 import { spacing, typography } from '../theme';
-import { useGlobalBottomSheet } from './GlobalBottomSheet';
+import { useLocalBottomSheet } from '../lib';
+import { BottomSheet } from './index';
 
 export interface Option {
   value: string;
@@ -28,7 +29,15 @@ export const OptionSelector: React.FC<OptionSelectorProps> = ({
   trigger,
 }) => {
   const { colors } = useTheme();
-  const { openBottomSheet, closeBottomSheet } = useGlobalBottomSheet();
+  const {
+    isVisible,
+    title: bottomSheetTitle,
+    content,
+    bottomSheetRef,
+    openBottomSheet,
+    closeBottomSheet,
+    handleClose,
+  } = useLocalBottomSheet();
 
   const handleSelect = (value: string) => {
     console.log('OptionSelector: handleSelect called with value:', value);
@@ -108,12 +117,26 @@ export const OptionSelector: React.FC<OptionSelectorProps> = ({
   };
 
   return (
-    <TouchableOpacity
-      style={styles.trigger}
-      onPress={openSelector}
-    >
-      {trigger}
-    </TouchableOpacity>
+    <>
+    {isVisible && (
+        <BottomSheet
+          ref={bottomSheetRef}
+          title={bottomSheetTitle}
+          height="auto"
+          onClose={handleClose}
+        >
+          {content}
+        </BottomSheet>
+      )}
+      <TouchableOpacity
+        style={styles.trigger}
+        onPress={openSelector}
+      >
+        {trigger}
+      </TouchableOpacity>
+
+      
+    </>
   );
 };
 

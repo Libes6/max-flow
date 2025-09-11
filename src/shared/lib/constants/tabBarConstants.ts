@@ -1,0 +1,10 @@
+export const TAB_BAR_CONSTANTS = {
+  ELEVATION: 8,
+  SHADOW_OFFSET: { width: 0, height: -2 },
+  SHADOW_OPACITY: 0.1,
+  SHADOW_RADIUS: 8,
+  BORDER_TOP_WIDTH: 0,
+  LABEL_FONT_SIZE: 12,
+  LABEL_FONT_WEIGHT: '500' as const,
+  ICON_MARGIN_TOP: 4,
+} as const;

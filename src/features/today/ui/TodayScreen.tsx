@@ -16,7 +16,9 @@ import { useHabitsStore } from '../../habits/model/useHabitsStore';
 import { useStatisticsStore } from '../../statistics/model/useStatisticsStore';
 import { Habit } from '../../../shared/types';
 import { format } from 'date-fns';
-import { ru, en, uk, kk } from 'date-fns/locale';
+import { ru, enUS, uk, kk } from 'date-fns/locale';
+import { ConfettiEffect } from '../../../shared/ui/ConfettiEffect';
+import { useSettingsStore } from '../../../shared/lib/stores/useSettingsStore';
 
 const HabitCard: React.FC<{
   habit: Habit;
@@ -71,6 +73,8 @@ export const TodayScreen: React.FC = () => {
   const { colors } = useTheme();
   const habits = useHabitsStore((s) => s.habits);
   const { habitCompletions, markHabitCompleted, markHabitIncomplete } = useStatisticsStore();
+  const { visualEffects } = useSettingsStore();
+  const [showConfetti, setShowConfetti] = useState(false);
   
   // Получаем сегодняшнюю дату в формате YYYY-MM-DD
   const today = new Date().toISOString().split('T')[0];
@@ -78,7 +82,7 @@ export const TodayScreen: React.FC = () => {
   // Функция для получения локали date-fns
   const getDateLocale = () => {
     switch (i18n.language) {
-      case 'en': return en;
+      case 'en': return enUS;
       case 'uk': return uk;
       case 'kk': return kk;
       default: return ru;
@@ -102,7 +106,15 @@ export const TodayScreen: React.FC = () => {
       markHabitIncomplete(habitId, today);
     } else {
       markHabitCompleted(habitId, today);
+      // Показываем конфетти только при выполнении привычки
+      if (visualEffects) {
+        setShowConfetti(true);
+      }
     }
+  };
+
+  const handleConfettiComplete = () => {
+    setShowConfetti(false);
   };
 
 
@@ -111,11 +123,17 @@ export const TodayScreen: React.FC = () => {
   const progressPercentage = totalCount > 0 ? (completedCount / totalCount) * 100 : 0;
 
   return (
-    <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
-      <View style={styles.header}>
-        <Text style={[styles.title, { color: colors.text }]}>{t('today.title')}</Text>
-        <Text style={[styles.subtitle, { color: colors.textSecondary }]}>{formattedDate}</Text>
-      </View>
+    <>
+    
+      <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
+      <ConfettiEffect 
+        isVisible={showConfetti} 
+        onComplete={handleConfettiComplete} 
+      />
+        <View style={styles.header}>
+          <Text style={[styles.title, { color: colors.text }]}>{t('today.title')}</Text>
+          <Text style={[styles.subtitle, { color: colors.textSecondary }]}>{formattedDate}</Text>
+        </View>
       
       {totalCount > 0 && (
         <View style={styles.progressSection}>
@@ -174,7 +192,8 @@ export const TodayScreen: React.FC = () => {
         showsVerticalScrollIndicator={false}
         style={styles.content}
       />
-    </SafeAreaView>
+      </SafeAreaView>
+    </>
   );
 };
 

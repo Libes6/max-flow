@@ -17,7 +17,8 @@ import { useProfileStore } from '../model/useProfileStore';
 import { LanguageSelector } from '../../settings/ui/LanguageSelector';
 import { ThemeSelector } from '../../settings/ui/ThemeSelector';
 import { useNavigationContext } from '../../../app/providers/NavigationProvider';
-import { useGlobalBottomSheet } from '../../../shared/ui/GlobalBottomSheet';
+import { useLocalBottomSheet } from '../../../shared/lib';
+import { BottomSheet } from '../../../shared/ui';
 import { useSettingsStore } from '../../../shared/lib/stores/useSettingsStore';
 
 const ProfileHeader: React.FC = () => {
@@ -146,8 +147,19 @@ export const ProfileScreen: React.FC = () => {
   const { t } = useTranslation();
   const { colors } = useTheme();
   const { user } = useAuth();
-  const { openBottomSheet, closeBottomSheet } = useGlobalBottomSheet();
-  const { language, theme, setLanguage, setTheme } = useSettingsStore();
+  const {
+    isVisible,
+    title,
+    content,
+    bottomSheetRef,
+    openBottomSheet,
+    closeBottomSheet,
+    handleClose,
+  } = useLocalBottomSheet();
+  const { language, theme, setLanguage, setTheme, getCurrentTheme, visualEffects, setVisualEffects } = useSettingsStore();
+  
+  // Получаем актуальную тему (учитывая системную)
+  const currentTheme = getCurrentTheme();
 
   // Обработчики для языка и темы
   const handleLanguagePress = () => {
@@ -211,6 +223,12 @@ export const ProfileScreen: React.FC = () => {
   const handleThemePress = () => {
     const themeOptions = [
       {
+        value: 'system',
+        label: t('themes.system'),
+        description: t('themes.systemDescription'),
+        icon: 'phone-portrait',
+      },
+      {
         value: 'light',
         label: t('themes.light'),
         description: t('themes.lightDescription'),
@@ -238,7 +256,7 @@ export const ProfileScreen: React.FC = () => {
               },
             ]}
             onPress={() => {
-              setTheme(option.value as 'light' | 'dark');
+              setTheme(option.value as any);
               closeBottomSheet();
             }}
           >
@@ -274,6 +292,10 @@ export const ProfileScreen: React.FC = () => {
     openBottomSheet(t('settings.theme'), content);
   };
 
+  const handleVisualEffectsPress = () => {
+    setVisualEffects(!visualEffects);
+  };
+
 
 
 
@@ -300,8 +322,8 @@ export const ProfileScreen: React.FC = () => {
           />
           <SettingItem
             title={t('settings.theme')}
-            subtitle={t('settings.themeSubtitle')}
-            icon={theme === 'dark' ? 'moon-outline' : 'sunny-outline'}
+            subtitle={theme === 'system' ? t('themes.system') : currentTheme === 'dark' ? t('themes.dark') : t('themes.light')}
+            icon={theme === 'system' ? 'phone-portrait-outline' : currentTheme === 'dark' ? 'moon-outline' : 'sunny-outline'}
             onPress={handleThemePress}
           />
           <SettingItem
@@ -310,12 +332,29 @@ export const ProfileScreen: React.FC = () => {
             icon="notifications-outline"
           />
           <SettingItem
+            title={t('profile.visualEffects')}
+            subtitle={visualEffects ? t('common.enabled') : t('common.disabled')}
+            icon="sparkles-outline"
+            onPress={handleVisualEffectsPress}
+          />
+          <SettingItem
             title={t('profile.version')}
             subtitle="1.0.0"
             icon="information-circle-outline"
           />
         </View>
       </ScrollView>
+
+      {isVisible && (
+        <BottomSheet
+          ref={bottomSheetRef}
+          title={title}
+          height="auto"
+          onClose={handleClose}
+        >
+          {content}
+        </BottomSheet>
+      )}
     </SafeAreaView>
   );
 };

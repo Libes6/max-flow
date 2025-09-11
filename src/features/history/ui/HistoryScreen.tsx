@@ -11,7 +11,8 @@ import { useTranslation } from 'react-i18next';
 import { useTheme, spacing, typography, dimensions } from '../../../shared/theme';
 import { NewCalendar } from '../../../shared/ui/NewCalendar';
 import { DayHabitsBottomSheet } from '../../../shared/ui/DayHabitsBottomSheet';
-import { useGlobalBottomSheet } from '../../../shared/ui/GlobalBottomSheet';
+import { useLocalBottomSheet } from '../../../shared/lib';
+import { BottomSheet } from '../../../shared/ui';
 import { useHabitsStore } from '../../habits/model/useHabitsStore';
 import { useStatisticsStore } from '../../statistics/model/useStatisticsStore';
 import { Habit } from '../../../shared/types';
@@ -19,25 +20,28 @@ import { Habit } from '../../../shared/types';
 
 
 export const HistoryScreen: React.FC = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { colors } = useTheme();
   const habits = useHabitsStore((s) => s.habits);
   const { habitCompletions, markHabitCompleted, markHabitIncomplete } = useStatisticsStore();
-  const { openBottomSheet, updateBottomSheetContent, closeBottomSheet } = useGlobalBottomSheet();
-
-  const handleCloseBottomSheet = () => {
-    setIsBottomSheetOpen(false);
-    closeBottomSheet();
-  };
+  const {
+    isVisible,
+    title,
+    content,
+    bottomSheetRef,
+    openBottomSheet,
+    updateBottomSheetContent,
+    closeBottomSheet,
+    handleClose,
+  } = useLocalBottomSheet();
 
   const [selectedDate, setSelectedDate] = useState(new Date());
-  const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
 
   const selectedDateStr = selectedDate.toISOString().split('T')[0];
 
   // Обновляем контент bottom sheet при изменении habitCompletions
   useEffect(() => {
-    if (isBottomSheetOpen) {
+    if (isVisible) {
       const content = (
         <DayHabitsBottomSheet
           date={selectedDate}
@@ -48,14 +52,7 @@ export const HistoryScreen: React.FC = () => {
       );
       updateBottomSheetContent(content);
     }
-  }, [habitCompletions, habits, selectedDate, isBottomSheetOpen, updateBottomSheetContent]);
-
-  // Обрабатываем закрытие bottom sheet
-  useEffect(() => {
-    if (!isBottomSheetOpen) {
-      handleCloseBottomSheet();
-    }
-  }, [isBottomSheetOpen]);
+  }, [habitCompletions, habits, selectedDate, isVisible, updateBottomSheetContent]);
 
   const getHabitCompletionStatus = (habitId: string) => {
     const habitData = habitCompletions[habitId] || [];
@@ -76,9 +73,8 @@ export const HistoryScreen: React.FC = () => {
 
   const handleDateSelect = (date: Date) => {
     setSelectedDate(date);
-    setIsBottomSheetOpen(true);
     
-    const title = date.toLocaleDateString('ru-RU', {
+    const title = date.toLocaleDateString(i18n.language, {
       weekday: 'long',
       day: 'numeric',
       month: 'long',
@@ -111,6 +107,17 @@ export const HistoryScreen: React.FC = () => {
         habitCompletions={habitCompletions}
         habits={habits}
       />
+
+      {isVisible && (
+        <BottomSheet
+          ref={bottomSheetRef}
+          title={title}
+          height="60"
+          onClose={handleClose}
+        >
+          {content}
+        </BottomSheet>
+      )}
     </SafeAreaView>
   );
 };

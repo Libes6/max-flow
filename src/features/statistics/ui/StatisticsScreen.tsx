@@ -115,33 +115,33 @@ export const StatisticsScreen: React.FC = () => {
         ListHeaderComponent={() => (
           <>
             <View style={styles.section}>
-              <Text style={[styles.sectionTitle, { color: colors.text }]}>Общая статистика</Text>
+              <Text style={[styles.sectionTitle, { color: colors.text }]}>{t('statistics.overallStats')}</Text>
               
               <View style={styles.statsGrid}>
                 <StatCard
                   number={overallStats.activeHabits}
-                  label="Активные привычки"
+                  label={t('statistics.activeHabits')}
                   icon="list-outline"
                   color={colors.primary}
                 />
                 
                 <StatCard
                   number={overallStats.currentStreak}
-                  label="Дней подряд"
+                  label={t('statistics.daysInRow')}
                   icon="flame-outline"
                   color={colors.warning}
                 />
                 
                 <StatCard
                   number={`${Math.round(overallStats.averageCompletionRate)}%`}
-                  label="Выполнение"
+                  label={t('statistics.completion')}
                   icon="checkmark-circle-outline"
                   color={colors.success}
                 />
                 
                 <StatCard
                   number={overallStats.totalCompletions}
-                  label="Всего выполнено"
+                  label={t('statistics.totalCompleted')}
                   icon="trophy-outline"
                   color={colors.info}
                 />
@@ -149,7 +149,7 @@ export const StatisticsScreen: React.FC = () => {
             </View>
             
             <View style={styles.section}>
-              <Text style={[styles.sectionTitle, { color: colors.text }]}>Статистика привычек</Text>
+              <Text style={[styles.sectionTitle, { color: colors.text }]}>{t('statistics.habitStats')}</Text>
             </View>
           </>
         )}
@@ -161,10 +161,10 @@ export const StatisticsScreen: React.FC = () => {
               color={colors.textTertiary} 
             />
             <Text style={[styles.emptyStateText, { color: colors.textSecondary }]}>
-              Данные появятся после добавления привычек
+              {t('statistics.noDataTitle')}
             </Text>
             <Text style={[styles.emptyStateSubtext, { color: colors.textTertiary }]}>
-              Отмечайте выполнение привычек, чтобы видеть статистику
+              {t('statistics.noDataSubtitle')}
             </Text>
           </View>
         )}

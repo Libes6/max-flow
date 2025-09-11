@@ -34,6 +34,11 @@ export const NewCalendar: React.FC<NewCalendarProps> = ({
   const { t } = useTranslation();
   const [calendarKey, setCalendarKey] = useState(0);
 
+  // Принудительно обновляем календарь при смене темы
+  useEffect(() => {
+    setCalendarKey(prev => prev + 1);
+  }, [colors]);
+
   // Настраиваем локализацию календаря
   useEffect(() => {
     const currentLanguage = i18n.language;

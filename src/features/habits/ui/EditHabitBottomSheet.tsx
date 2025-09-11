@@ -5,7 +5,8 @@ import { useTheme, spacing, typography } from '../../../shared/theme';
 import { FormInput } from '../../../shared/ui/FormInput';
 import { Button } from '../../../shared/ui/Button';
 import { ColorIconBottomSheet } from './ColorIconBottomSheet';
-import { useGlobalBottomSheet } from '../../../shared/ui/GlobalBottomSheet';
+import { useLocalBottomSheet } from '../../../shared/lib';
+import { BottomSheet } from '../../../shared/ui';
 import { Habit } from '../../../shared/types';
 
 interface EditHabitBottomSheetProps {
@@ -29,7 +30,15 @@ export const EditHabitBottomSheet: React.FC<EditHabitBottomSheetProps> = ({
   onClose,
 }) => {
   const { colors } = useTheme();
-  const { openBottomSheet, closeBottomSheet } = useGlobalBottomSheet();
+  const {
+    isVisible,
+    title,
+    content,
+    bottomSheetRef,
+    openBottomSheet,
+    closeBottomSheet,
+    handleClose,
+  } = useLocalBottomSheet();
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [category, setCategory] = useState('');

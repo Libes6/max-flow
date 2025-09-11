@@ -14,7 +14,7 @@ export const EditHabitScreen: React.FC = () => {
   const route = useRoute<any>();
   const { t } = useTranslation();
   const { colors } = useTheme();
-  const { habits, updateHabit, deleteHabit } = useHabitsStore();
+  const { habits, updateHabit, removeHabit } = useHabitsStore();
 
   const habit = habits.find(h => h.id === route.params.habitId);
 
@@ -65,7 +65,7 @@ export const EditHabitScreen: React.FC = () => {
           text: t('habits.deleteConfirmDelete'),
           style: 'destructive',
           onPress: () => {
-            deleteHabit(habit.id);
+            removeHabit(habit.id);
             navigation.goBack();
           },
         },

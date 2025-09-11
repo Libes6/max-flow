@@ -2,16 +2,20 @@ import { useSettingsStore } from '../lib/stores/useSettingsStore';
 import { darkColors, lightColors } from './colors';
 
 export const useTheme = () => {
-  const { theme } = useSettingsStore();
+  const { theme, getCurrentTheme } = useSettingsStore();
   
-  console.log('useTheme: current theme from store:', theme);
+  // Получаем актуальную тему (учитывая системную)
+  const currentTheme = getCurrentTheme();
   
-  const colors = theme === 'dark' ? darkColors : lightColors;
-  const isDark = theme === 'dark';
+  console.log('useTheme: theme setting:', theme, 'current theme:', currentTheme);
+  
+  const colors = currentTheme === 'dark' ? darkColors : lightColors;
+  const isDark = currentTheme === 'dark';
   
   return {
     colors,
     isDark,
-    theme,
+    theme: currentTheme,
+    themeSetting: theme, // Возвращаем настройку темы (light/dark/system)
   };
 };

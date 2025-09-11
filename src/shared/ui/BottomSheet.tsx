@@ -136,7 +136,7 @@ export const BottomSheetComponent = forwardRef<BottomSheetRef, BottomSheetProps>
     return (
       <BottomSheet
         ref={bottomSheetRef}
-        index={-1}
+        index={0} // Изменяем на 0 чтобы BottomSheet был виден
         snapPoints={snapPoints}
         onChange={handleSheetChanges}
         backdropComponent={renderBackdrop}

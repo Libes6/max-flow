@@ -28,13 +28,19 @@
     "about": "About",
     "notAuthenticated": "Not authenticated",
     "registerNow": "Register now?",
+    "guestMode": "Guest Mode",
+    "tapToLogin": "Tap to login",
     "editProfile": "Edit profile",
     "editProfileSubtitle": "Change personal data",
     "notifications": "Notifications",
     "notificationsSubtitle": "Reminder settings",
+    "visualEffects": "Visual Effects",
+    "visualEffectsSubtitle": "Effects when completing habits",
     "theme": "Theme",
     "themeSubtitle": "Dark theme",
-    "version": "Version"
+    "version": "Version",
+    "guestModeDescription": "Use the app without registration",
+    "exitGuestMode": "Exit guest mode"
   },
   "auth": {
     "welcome": "Welcome",
@@ -58,12 +64,16 @@
     "confirmPasswordPlaceholder": "Repeat password",
     "alreadyHaveAccount": "Already have an account?",
     "dontHaveAccount": "Don't have an account?",
+    "continueWithoutAuth": "Continue without authentication",
+    "continueWithoutAuthSubtitle": "Use the app locally",
     "registrationSuccess": "Registration successful",
     "registrationSuccessMessage": "Your account has been created successfully!"
   },
   "themes": {
+    "system": "System",
     "light": "Light",
     "dark": "Dark",
+    "systemDescription": "Follows system settings",
     "lightDescription": "Light theme with blue accents",
     "darkDescription": "Dark theme with purple accents"
   },
@@ -109,7 +119,9 @@
     "cancel": "Cancel",
     "ok": "OK",
     "close": "Close",
-    "select": "Select"
+    "select": "Select",
+    "enabled": "Enabled",
+    "disabled": "Disabled"
   },
   "navigation": {
     "today": "Today",
@@ -136,7 +148,10 @@
     "filterByHabit": "Filter by habit",
     "allHabits": "All habits",
     "deleteEntry": "Delete entry",
-    "deleteEntryConfirm": "Are you sure you want to delete this entry?"
+    "deleteEntryConfirm": "Are you sure you want to delete this entry?",
+    "completed": "Completed",
+    "of": "of",
+    "noHabitsForDay": "No habits for this day"
   },
   "statistics": {
     "title": "Statistics",
@@ -149,7 +164,15 @@
     "streak": "Best streak",
     "averagePerDay": "Average per day",
     "mostProductiveDay": "Most productive day",
-    "leastProductiveDay": "Least productive day"
+    "leastProductiveDay": "Least productive day",
+    "overallStats": "Overall Statistics",
+    "activeHabits": "Active Habits",
+    "daysInRow": "Days in a Row",
+    "completion": "Completion",
+    "totalCompleted": "Total Completed",
+    "habitStats": "Habit Statistics",
+    "noDataTitle": "Data will appear after adding habits",
+    "noDataSubtitle": "Mark habit completions to see statistics"
   },
   "months": {
     "january": "January",

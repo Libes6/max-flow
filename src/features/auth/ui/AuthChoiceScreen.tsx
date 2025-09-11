@@ -22,10 +22,10 @@ export const AuthChoiceScreen: React.FC = () => {
     navigation.navigate('Register' as never);
   };
 
-  const handleGoogleAuth = () => {
-    // TODO: Реализовать Google авторизацию
-    console.log('Google auth - будет реализовано позже');
-  };
+  // const handleGoogleAuth = () => {
+  //   // TODO: Реализовать Google авторизацию
+  //   console.log('Google auth - будет реализовано позже');
+  // };
 
   const handleContinueWithoutAuth = () => {
     setGuestMode(true);
@@ -66,7 +66,7 @@ export const AuthChoiceScreen: React.FC = () => {
             <Ionicons name="chevron-forward" size={20} color={colors.textTertiary} />
           </TouchableOpacity>
 
-          <TouchableOpacity
+          {/* <TouchableOpacity
             style={[styles.authOption, { backgroundColor: colors.surface, borderColor: colors.border }]}
             onPress={handleGoogleAuth}
             activeOpacity={0.7}
@@ -85,7 +85,7 @@ export const AuthChoiceScreen: React.FC = () => {
               </View>
             </View>
             <Ionicons name="chevron-forward" size={20} color={colors.textTertiary} />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
 
           <TouchableOpacity
             style={[styles.authOption, { backgroundColor: colors.surface, borderColor: colors.border }]}
