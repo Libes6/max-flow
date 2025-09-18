@@ -32,7 +32,10 @@ class NotificationService {
   async initialize(): Promise<void> {
     if (this.isInitialized) return;
 
+    console.log('🔔 NotificationService: Инициализация...');
+
     // Настраиваем Firebase Messaging
+    console.log('🔔 NotificationService: Настраиваем Firebase обработчики...');
     setupBackgroundMessageHandler();
     setupForegroundMessageHandler();
 

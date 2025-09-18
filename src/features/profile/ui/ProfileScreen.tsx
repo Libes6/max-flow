@@ -305,6 +305,35 @@ export const ProfileScreen: React.FC = () => {
     navigation.navigate('NotificationSettings');
   };
 
+  const handleFirebaseTestPress = async () => {
+    try {
+      console.log('🔥 ProfileScreen: Тестируем Firebase...');
+      const { getFCMToken } = await import('@shared/lib/firebase');
+      const token = await getFCMToken();
+      
+      if (token) {
+        Alert.alert(
+          '🔥 Firebase Test',
+          `Токен получен:\n${token.substring(0, 50)}...`,
+          [{ text: 'OK' }]
+        );
+      } else {
+        Alert.alert(
+          '🔥 Firebase Test',
+          'Токен не получен. Проверьте консоль для деталей.',
+          [{ text: 'OK' }]
+        );
+      }
+    } catch (error) {
+      console.error('🔥 ProfileScreen: Ошибка Firebase теста:', error);
+      Alert.alert(
+        '🔥 Firebase Test',
+        `Ошибка: ${error.message}`,
+        [{ text: 'OK' }]
+      );
+    }
+  };
+
 
 
 
@@ -350,6 +379,12 @@ export const ProfileScreen: React.FC = () => {
             subtitle={t('settings.notificationsSubtitle')}
             icon="notifications-outline"
             onPress={handleNotificationSettingsPress}
+          />
+          <SettingItem
+            title="🔥 Firebase Test"
+            subtitle="Тест Firebase токена"
+            icon="flame-outline"
+            onPress={handleFirebaseTestPress}
           />
           <SettingItem
             title={t('profile.version')}

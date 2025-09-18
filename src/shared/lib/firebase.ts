@@ -23,27 +23,40 @@ export const firebaseMessaging = messaging();
 // Получение FCM токена
 export const getFCMToken = async (): Promise<string | null> => {
   try {
+    console.log('🔥 Firebase: Начинаем получение FCM токена...');
+    
     if (Platform.OS === 'android') {
+      console.log('🔥 Firebase: Запрашиваем разрешения...');
       const authStatus = await messaging().requestPermission();
+      console.log('🔥 Firebase: Статус разрешений:', authStatus);
+      
       const enabled = authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
                      authStatus === messaging.AuthorizationStatus.PROVISIONAL;
       
+      console.log('🔥 Firebase: Разрешения включены:', enabled);
+      
       if (enabled) {
+        console.log('🔥 Firebase: Получаем токен...');
         const token = await messaging().getToken();
         console.log('🔥 FCM Token получен:', token);
         console.log('📱 Полный FCM токен:', token);
         return token;
+      } else {
+        console.log('🔥 Firebase: Разрешения не предоставлены');
       }
+    } else {
+      console.log('🔥 Firebase: Платформа не Android, токен не получен');
     }
     return null;
   } catch (error) {
-    console.error('Error getting FCM token:', error);
+    console.error('❌ Firebase: Ошибка получения FCM токена:', error);
     return null;
   }
 };
 
 // Обработка уведомлений в фоне
 export const setupBackgroundMessageHandler = () => {
+  console.log('🔥 Firebase: Настраиваем обработчик фоновых сообщений');
   messaging().setBackgroundMessageHandler(async (remoteMessage) => {
     console.log('📱 Background message received:', remoteMessage);
     
@@ -86,6 +99,7 @@ export const setupBackgroundMessageHandler = () => {
 
 // Обработка уведомлений на переднем плане
 export const setupForegroundMessageHandler = () => {
+  console.log('🔥 Firebase: Настраиваем обработчик сообщений на переднем плане');
   messaging().onMessage(async (remoteMessage) => {
     console.log('📱 Foreground message received:', remoteMessage);
     

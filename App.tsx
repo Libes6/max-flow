@@ -12,6 +12,7 @@ import {
 } from './src/app/providers';
 import { RootNavigator } from './src/app/navigation';
 import './src/shared/lib/i18n';
+import './src/shared/lib/firebase'; // Инициализация Firebase
 import * as Sentry from '@sentry/react-native';
 
 Sentry.init({
