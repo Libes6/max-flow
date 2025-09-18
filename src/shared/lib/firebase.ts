@@ -2,15 +2,8 @@ import { initializeApp, getApps } from '@react-native-firebase/app';
 import messaging from '@react-native-firebase/messaging';
 import { Alert, Platform } from 'react-native';
 
-// Firebase конфигурация (будет загружена из google-services.json)
-// const firebaseConfig = {
-//   apiKey: "AIzaSyAx9bS5wZ7ryuV73gcWKDbUu8-ZyRlJx6M",
-//   authDomain: "flow-max-6c2ac.firebaseapp.com",
-//   projectId: "flow-max-6c2ac",
-//   storageBucket: "flow-max-6c2ac.firebasestorage.app",
-//   messagingSenderId: "693657338765",
-//   appId: "1:693657338765:android:ede6d1967430862101b3c4"
-// };
+// Firebase конфигурация загружается из google-services.json
+// Для справки, значения также доступны в src/shared/lib/env.ts
 
 // Инициализация Firebase (конфигурация загружается из google-services.json)
 if (getApps().length === 0) {

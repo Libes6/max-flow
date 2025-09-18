@@ -85,10 +85,23 @@ class NotificationService {
     this.isInitialized = true;
   }
 
-  async requestPermissions(): Promise<boolean> {
+  async   requestPermissions(): Promise<boolean> {
     return new Promise(async (resolve) => {
       try {
-        // Запрашиваем разрешения на уведомления
+        console.log('🔔 Запрашиваем разрешения на уведомления...');
+        
+        // Сначала проверяем существующие разрешения
+        const { checkAllPermissions } = await import('./permissions');
+        const hasPermissions = await checkAllPermissions();
+        
+        if (hasPermissions) {
+          console.log('✅ Разрешения уже есть');
+          mmkvStorageAdapter.setItem('notification_permissions', 'true');
+          resolve(true);
+          return;
+        }
+        
+        // Запрашиваем разрешения на уведомления через react-native-push-notification
         const pushPermissions = await PushNotification.requestPermissions();
         console.log('📱 Push permissions result:', pushPermissions);
         
@@ -98,9 +111,19 @@ class NotificationService {
         if (pushPermissions && typeof pushPermissions === 'object') {
           pushGranted = !!(pushPermissions.alert && pushPermissions.badge && pushPermissions.sound);
         } else {
-          // Если разрешения не получены, пробуем альтернативный способ
           console.log('⚠️ Push permissions не получены, пробуем альтернативный способ');
-          pushGranted = true; // Предполагаем что разрешения есть
+          // Для Android 13+ может потребоваться дополнительный запрос
+          const { PermissionsAndroid } = await import('react-native');
+          try {
+            const granted = await PermissionsAndroid.request(
+              PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS
+            );
+            pushGranted = granted === PermissionsAndroid.RESULTS.GRANTED;
+            console.log('📱 Android 13+ notification permission:', granted);
+          } catch (permError) {
+            console.log('⚠️ Не удалось запросить разрешения Android 13+, предполагаем что они есть');
+            pushGranted = true;
+          }
         }
         
         console.log('🔔 Push permissions granted:', pushGranted);
@@ -117,6 +140,7 @@ class NotificationService {
         console.error('❌ Ошибка запроса разрешений:', error);
         // В случае ошибки, разрешаем работу с уведомлениями
         console.log('⚠️ Разрешаем работу с уведомлениями несмотря на ошибку');
+        mmkvStorageAdapter.setItem('notification_permissions', 'true');
         resolve(true);
       }
     });

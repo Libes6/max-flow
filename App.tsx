@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { StatusBar, useColorScheme } from 'react-native';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
@@ -13,10 +13,15 @@ import {
 import { RootNavigator } from './src/app/navigation';
 import './src/shared/lib/i18n';
 import './src/shared/lib/firebase'; // Инициализация Firebase
+import { notificationService } from './src/shared/lib/notifications';
+import { ENV, validateEnv } from './src/shared/lib/env';
 import * as Sentry from '@sentry/react-native';
 
+// Проверяем переменные окружения
+validateEnv();
+
 Sentry.init({
-  dsn: 'https://b0c84b77bfc2e1218c17ef1b314d1863@o4507758662189056.ingest.de.sentry.io/4510001418469456',
+  dsn: ENV.SENTRY_DSN,
 
 
   sendDefaultPii: true,
@@ -40,6 +45,21 @@ const queryClient = new QueryClient();
 
 function App() {
   const isDarkMode = useColorScheme() === 'dark';
+
+  useEffect(() => {
+    // Инициализируем уведомления и запрашиваем разрешения при запуске
+    const initNotifications = async () => {
+      try {
+        console.log('🔔 App: Инициализируем уведомления...');
+        await notificationService.initialize();
+        console.log('🔔 App: Уведомления инициализированы');
+      } catch (error) {
+        console.error('❌ App: Ошибка инициализации уведомлений:', error);
+      }
+    };
+
+    initNotifications();
+  }, []);
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>

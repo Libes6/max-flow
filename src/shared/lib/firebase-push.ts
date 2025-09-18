@@ -1,7 +1,8 @@
 import { Platform } from 'react-native';
+import { ENV } from './env';
 
-// FCM Server Key из Firebase Console
-const FCM_SERVER_KEY = 'AIzaSyAx9bS5wZ7ryuV73gcWKDbUu8-ZyRlJx6M';
+// FCM Server Key из Firebase Console (из переменных окружения)
+const FCM_SERVER_KEY = ENV.FCM_SERVER_KEY;
 
 interface PushNotificationData {
   title: string;
@@ -12,6 +13,14 @@ interface PushNotificationData {
 
 // Функция отправки уведомления через Firebase
 export const sendFirebasePush = async (notification: PushNotificationData) => {
+  if (!FCM_SERVER_KEY) {
+    console.error('❌ FCM_SERVER_KEY не задан в переменных окружения');
+    return {
+      success: false,
+      error: 'FCM_SERVER_KEY не задан в переменных окружения',
+    };
+  }
+
   try {
     const message = {
       to: notification.token,
@@ -53,7 +62,7 @@ export const sendFirebasePush = async (notification: PushNotificationData) => {
     console.error('❌ Ошибка отправки уведомления:', error);
     return {
       success: false,
-      error: error.message,
+      error: error instanceof Error ? error.message : String(error),
     };
   }
 };

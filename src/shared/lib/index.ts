@@ -12,4 +12,5 @@ export { getFCMToken, setupBackgroundMessageHandler, setupForegroundMessageHandl
 export { sendFirebasePush, testFirebasePush } from './firebase-push';
 export { requestExactAlarmPermission, checkAllPermissions } from './permissions';
 export { notifeeService } from './notifee-service';
+export { ENV, validateEnv } from './env';
 export { default as i18n } from './i18n';
