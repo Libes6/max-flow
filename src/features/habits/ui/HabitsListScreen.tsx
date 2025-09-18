@@ -38,6 +38,14 @@ export const HabitsListScreen: React.FC = () => {
     removeHabit
   } = useHabitsSync();
 
+  // Сортируем привычки по приоритету: высокий -> средний -> низкий
+  const sortedHabits = [...habits].sort((a, b) => {
+    const priorityOrder = { high: 3, medium: 2, low: 1 };
+    const aPriority = priorityOrder[a.priority || 'medium'];
+    const bPriority = priorityOrder[b.priority || 'medium'];
+    return bPriority - aPriority; // Сначала высокий приоритет
+  });
+
   // Определяем тип навигации на Android
   const isGestureNavigation = Platform.OS === 'android' && insets.bottom === 0;
   const isButtonNavigation = Platform.OS === 'android' && insets.bottom > 0;
@@ -68,6 +76,7 @@ export const HabitsListScreen: React.FC = () => {
     navigation.navigate('CreateHabit');
   };
 
+
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
       <View style={styles.header}>
@@ -75,7 +84,7 @@ export const HabitsListScreen: React.FC = () => {
       </View>
 
       <FlatList
-        data={habits as unknown as HabitListItem[]}
+        data={sortedHabits as unknown as HabitListItem[]}
         renderItem={({ item }) => (
           <HabitCard
             habit={item}

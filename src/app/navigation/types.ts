@@ -8,6 +8,8 @@ export type RootStackParamList = {
   Login: undefined;
   Register: undefined;
   EditProfile: undefined;
+  NotificationSettings: undefined;
+  NotificationTest: undefined;
 };
 
 export type MainTabParamList = {
@@ -45,7 +47,8 @@ export type StatisticsStackParamList = {
 export type ProfileStackParamList = {
   UserProfile: undefined;
   EditProfile: undefined;
-  Notifications: undefined;
   DataManagement: undefined;
   About: undefined;
+  NotificationSettings: undefined;
+  NotificationTest: undefined;
 };

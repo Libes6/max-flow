@@ -5,6 +5,7 @@ import { RootStackParamList } from './types';
 import { MainTabNavigator } from './MainTabNavigator';
 import { SplashScreen, AuthChoiceScreen, LoginScreen, RegisterScreen } from '../../features';
 import { EditProfileScreen } from '../../features/profile/ui/EditProfileScreen';
+import { NotificationSettingsScreen, NotificationTestScreen } from '../../features/settings';
 import { colors } from '../../shared/theme';
 import { useAuth } from '../../features/auth/model/useAuth';
 import { useNavigationContext } from '../providers/NavigationProvider';
@@ -51,11 +52,15 @@ export const RootNavigator: React.FC = () => {
           <>
             <Stack.Screen name="Main" component={MainTabNavigator} />
             <Stack.Screen name="EditProfile" component={EditProfileScreen} />
+            <Stack.Screen name="NotificationSettings" component={NotificationSettingsScreen} />
+            <Stack.Screen name="NotificationTest" component={NotificationTestScreen} />
           </>
         ) : isGuestMode ? (
           // Гостевой режим - показываем основные экраны без авторизации
           <>
             <Stack.Screen name="Main" component={MainTabNavigator} />
+            <Stack.Screen name="NotificationSettings" component={NotificationSettingsScreen} />
+            <Stack.Screen name="NotificationTest" component={NotificationTestScreen} />
           </>
         ) : (
           // Пользователь не авторизован - показываем экраны авторизации

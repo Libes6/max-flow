@@ -7,33 +7,69 @@ import { HabitsStackParamList } from '../../../app/navigation/types';
 import { useTheme, spacing } from '../../../shared/theme';
 import { FormInput } from '../../../shared/ui/FormInput';
 import { Button } from '../../../shared/ui/Button';
+import { PrioritySelector, type Priority, CategorySelector, TimePicker, Switch } from '../../../shared/ui';
 import { useHabitsStore } from '../model/useHabitsStore';
+import { useHabitNotifications } from '../hooks/useHabitNotifications';
 
 export const AddHabitScreen: React.FC = () => {
   const navigation = useNavigation<any>();
   const { t } = useTranslation();
   const { colors } = useTheme();
   const { addHabit } = useHabitsStore();
+  const { scheduleHabitReminders, permissions } = useHabitNotifications();
 
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
-  const [category, setCategory] = useState('');
+  const [category, setCategory] = useState('general');
   const [selectedColor, setSelectedColor] = useState('#3B82F6');
   const [selectedIcon, setSelectedIcon] = useState('fitness');
+  const [priority, setPriority] = useState<Priority>('medium');
+  const [reminderTime, setReminderTime] = useState<string | undefined>(undefined);
+  const [enableReminder, setEnableReminder] = useState(false);
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!name.trim()) {
       Alert.alert(t('common.error'), t('habits.nameRequired'));
       return;
     }
 
-    addHabit({
+    const habitData = {
       name: name.trim(),
       description: description.trim(),
       category: category.trim(),
       color: selectedColor,
       icon: selectedIcon,
-    });
+      priority,
+    };
+
+    // Создаем привычку
+    addHabit(habitData);
+
+    // Получаем созданную привычку из store
+    const { habits } = useHabitsStore.getState();
+    const createdHabit = habits.find(h => h.name === habitData.name && h.description === habitData.description);
+
+    // Планируем напоминание если включено
+    if (enableReminder && reminderTime && permissions && createdHabit) {
+      try {
+        console.log('🔔 AddHabitScreen: Scheduling reminder for habit:', createdHabit.name);
+        const [hours, minutes] = reminderTime.split(':').map(Number);
+        const reminderDate = new Date();
+        reminderDate.setHours(hours, minutes, 0, 0);
+        
+        // Если время уже прошло сегодня, планируем на завтра
+        if (reminderDate <= new Date()) {
+          reminderDate.setDate(reminderDate.getDate() + 1);
+        }
+
+        console.log('🔔 AddHabitScreen: Reminder date:', reminderDate);
+        await scheduleHabitReminders(createdHabit.id, reminderDate);
+        console.log('🔔 AddHabitScreen: Reminder scheduled successfully');
+      } catch (error) {
+        console.error('🔔 AddHabitScreen: Failed to schedule reminder:', error);
+        Alert.alert(t('common.error'), t('habits.reminderError'));
+      }
+    }
 
     navigation.goBack();
   };
@@ -48,7 +84,7 @@ export const AddHabitScreen: React.FC = () => {
   };
 
   return (
-    <View style={[styles.container, { backgroundColor: colors.background }]}>
+    <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
       <ScrollView 
         style={styles.scrollView}
         contentContainerStyle={styles.scrollContent}
@@ -73,11 +109,14 @@ export const AddHabitScreen: React.FC = () => {
             numberOfLines={3}
           />
 
-          <FormInput
-            label={t('habits.habitCategory')}
-            value={category}
-            onChangeText={setCategory}
-            placeholder={t('habits.habitCategoryPlaceholder')}
+          <CategorySelector
+            selectedCategory={category}
+            onCategoryChange={setCategory}
+          />
+
+          <PrioritySelector
+            selectedPriority={priority}
+            onPriorityChange={setPriority}
           />
 
           <Button
@@ -86,6 +125,25 @@ export const AddHabitScreen: React.FC = () => {
             variant="secondary"
             style={styles.colorIconButton}
           />
+
+          {permissions && (
+            <View style={styles.reminderSection}>
+              <Switch
+                label={t('habits.enableReminder')}
+                subtitle={t('habits.reminderTimeSubtitle')}
+                value={enableReminder}
+                onValueChange={setEnableReminder}
+              />
+              
+              {enableReminder && (
+                <TimePicker
+                  label={t('habits.reminderTime')}
+                  value={reminderTime || '09:00'}
+                  onChange={setReminderTime}
+                />
+              )}
+            </View>
+          )}
 
           <View style={styles.buttonRow}>
             <Button
@@ -102,7 +160,7 @@ export const AddHabitScreen: React.FC = () => {
           </View>
         </View>
       </ScrollView>
-    </View>
+    </SafeAreaView>
   );
 };
 
@@ -115,7 +173,7 @@ const styles = StyleSheet.create({
   },
   scrollContent: {
     padding: spacing.lg,
-    paddingBottom: spacing.xl,
+    paddingBottom: spacing.xxl * 2, // Увеличиваем отступ снизу
   },
   form: {
     gap: spacing.md,
@@ -123,10 +181,15 @@ const styles = StyleSheet.create({
   colorIconButton: {
     marginTop: spacing.xs,
   },
+  reminderSection: {
+    marginTop: spacing.md,
+    gap: spacing.sm,
+  },
   buttonRow: {
     flexDirection: 'row',
     gap: spacing.md,
-    marginTop: spacing.md,
+    marginTop: spacing.lg, // Увеличиваем отступ сверху
+    marginBottom: spacing.lg, // Добавляем отступ снизу
   },
   cancelButton: {
     flex: 1,

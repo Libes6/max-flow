@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "693657338765",
+    "project_id": "flow-max-6c2ac",
+    "storage_bucket": "flow-max-6c2ac.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:693657338765:android:ede6d1967430862101b3c4",
+        "android_client_info": {
+          "package_name": "com.flow_max"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAx9bS5wZ7ryuV73gcWKDbUu8-ZyRlJx6M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

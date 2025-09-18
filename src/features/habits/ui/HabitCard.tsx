@@ -3,6 +3,8 @@ import { View, StyleSheet, TouchableOpacity, Text, Animated } from 'react-native
 import { PanGestureHandler, State, PanGestureHandlerGestureEvent } from 'react-native-gesture-handler';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useTheme, spacing, typography } from '../../../shared/theme';
+import { useTranslation } from 'react-i18next';
+import type { Priority } from '../../../shared/ui';
 
 interface HabitCardProps {
   habit: {
@@ -12,6 +14,7 @@ interface HabitCardProps {
     category?: string;
     color: string;
     icon?: string;
+    priority?: Priority;
   };
   onEdit: () => void;
   onDelete: () => void;
@@ -19,9 +22,75 @@ interface HabitCardProps {
 
 export const HabitCard: React.FC<HabitCardProps> = ({ habit, onEdit, onDelete }) => {
   const { colors } = useTheme();
+  const { t } = useTranslation();
   const translateX = useRef(new Animated.Value(0)).current;
   const [isSwiped, setIsSwiped] = useState(false);
   const swipeThreshold = 80;
+
+  const priorityConfig = {
+    low: {
+      label: 'priority.low',
+      icon: 'chevron-down' as const,
+      color: '#10b981', // green
+    },
+    medium: {
+      label: 'priority.medium',
+      icon: 'remove' as const,
+      color: '#f59e0b', // amber
+    },
+    high: {
+      label: 'priority.high',
+      icon: 'chevron-up' as const,
+      color: '#ef4444', // red
+    },
+  };
+
+  const predefinedCategories = {
+    health: { icon: 'heart', color: '#ef4444' },
+    fitness: { icon: 'fitness', color: '#f59e0b' },
+    learning: { icon: 'book', color: '#3b82f6' },
+    work: { icon: 'briefcase', color: '#8b5cf6' },
+    personal: { icon: 'person', color: '#10b981' },
+    social: { icon: 'people', color: '#ec4899' },
+    hobby: { icon: 'musical-notes', color: '#06b6d4' },
+    general: { icon: 'list', color: '#6b7280' },
+  };
+
+  const customCategoryIcons = [
+    'star', 'diamond', 'flash', 'leaf', 'flower', 'sunny', 'moon', 'cloud',
+    'snow', 'rainy', 'thunderstorm', 'partly-sunny', 'umbrella', 'beach',
+    'bicycle', 'car', 'airplane', 'train', 'boat', 'rocket', 'home',
+    'restaurant', 'cafe', 'wine', 'pizza', 'ice-cream', 'gift', 'balloon',
+    'trophy', 'medal', 'ribbon', 'flag', 'paw', 'fish', 'bug', 'leaf-outline',
+    'flower-outline', 'heart-outline', 'happy', 'sad', 'thumbs-up', 'thumbs-down'
+  ];
+
+  const getCategoryIcon = (category: string) => {
+    const predefined = predefinedCategories[category as keyof typeof predefinedCategories];
+    if (predefined) return predefined.icon;
+    
+    // Для пользовательских категорий используем детерминированную случайную иконку
+    const hash = category.split('').reduce((a, b) => {
+      a = ((a << 5) - a) + b.charCodeAt(0);
+      return a & a;
+    }, 0);
+    const index = Math.abs(hash) % customCategoryIcons.length;
+    return customCategoryIcons[index];
+  };
+
+  const getCategoryColor = (category: string) => {
+    const predefined = predefinedCategories[category as keyof typeof predefinedCategories];
+    if (predefined) return predefined.color;
+    
+    // Для пользовательских категорий используем детерминированный случайный цвет
+    const colors = ['#ef4444', '#f59e0b', '#3b82f6', '#8b5cf6', '#10b981', '#ec4899', '#06b6d4', '#6b7280'];
+    const hash = category.split('').reduce((a, b) => {
+      a = ((a << 5) - a) + b.charCodeAt(0);
+      return a & a;
+    }, 0);
+    const index = Math.abs(hash) % colors.length;
+    return colors[index];
+  };
 
   const onGestureEvent = Animated.event(
     [{ nativeEvent: { translationX: translateX } }],
@@ -118,12 +187,35 @@ export const HabitCard: React.FC<HabitCardProps> = ({ habit, onEdit, onDelete })
                 )}
               </View>
               <View style={styles.habitInfo}>
-                <Text style={[styles.habitName, { color: colors.text }]}>{habit.name}</Text>
+                <View style={styles.habitTitleRow}>
+                  <Text style={[styles.habitName, { color: colors.text }]}>{habit.name}</Text>
+                  {habit.priority && (
+                    <View style={[styles.priorityBadge, { backgroundColor: priorityConfig[habit.priority].color }]}>
+                      <Ionicons
+                        name={priorityConfig[habit.priority].icon}
+                        size={12}
+                        color="white"
+                      />
+                      <Text style={styles.priorityText}>
+                        {t(priorityConfig[habit.priority].label)}
+                      </Text>
+                    </View>
+                  )}
+                </View>
                 {!!habit.description && (
                   <Text style={[styles.habitDescription, { color: colors.textSecondary }]}>{habit.description}</Text>
                 )}
                 {!!habit.category && (
-                  <Text style={[styles.habitCategory, { color: colors.textTertiary }]}>{habit.category}</Text>
+                  <View style={styles.categoryRow}>
+                    <Ionicons
+                      name={getCategoryIcon(habit.category) as any}
+                      size={14}
+                      color={getCategoryColor(habit.category)}
+                    />
+                    <Text style={[styles.habitCategory, { color: colors.textTertiary }]}>
+                      {t(`categories.${habit.category}`)}
+                    </Text>
+                  </View>
                 )}
               </View>
             </View>
@@ -197,13 +289,38 @@ const styles = StyleSheet.create({
   habitInfo: {
     flex: 1,
   },
+  habitTitleRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: spacing.xs,
+  },
   habitName: {
     ...typography.h3,
-    marginBottom: spacing.xs,
+    flex: 1,
+  },
+  priorityBadge: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: spacing.xs,
+    paddingVertical: 2,
+    borderRadius: 12,
+    marginLeft: spacing.sm,
+  },
+  priorityText: {
+    color: 'white',
+    fontSize: 10,
+    fontWeight: '600',
+    marginLeft: 2,
   },
   habitDescription: {
     ...typography.bodySmall,
     marginBottom: spacing.xs,
+  },
+  categoryRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: spacing.xs,
   },
   habitCategory: {
     ...typography.caption,

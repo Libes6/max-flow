@@ -4,8 +4,6 @@
     "app": "Application",
     "data": "Data",
     "about": "About",
-    "notifications": "Notifications",
-    "notificationsSubtitle": "Reminder settings",
     "theme": "Theme",
     "themeSubtitle": "Dark theme",
     "language": "Language",
@@ -32,8 +30,6 @@
     "tapToLogin": "Tap to login",
     "editProfile": "Edit profile",
     "editProfileSubtitle": "Change personal data",
-    "notifications": "Notifications",
-    "notificationsSubtitle": "Reminder settings",
     "visualEffects": "Visual Effects",
     "visualEffectsSubtitle": "Effects when completing habits",
     "theme": "Theme",
@@ -102,6 +98,11 @@
     "habitCategory": "Category",
     "habitCategoryPlaceholder": "Habit category",
     "colorIconButton": "Color and Icon",
+    "enableReminder": "Enable reminder",
+    "reminderTimeSubtitle": "Reminder to complete the habit",
+    "reminderTime": "Reminder time",
+    "reminderTimePlaceholder": "Select time",
+    "reminderError": "Error setting up reminder",
     "cancel": "Cancel",
     "save": "Save",
     "delete": "Delete",
@@ -113,6 +114,26 @@
     "deleteConfirmCancel": "Cancel",
     "deleteConfirmDelete": "Delete",
     "nameRequired": "Enter habit name"
+  },
+  "priority": {
+    "title": "Priority",
+    "low": "Low",
+    "medium": "Medium",
+    "high": "High"
+  },
+  "categories": {
+    "title": "Category",
+    "health": "Health",
+    "fitness": "Fitness",
+    "learning": "Learning",
+    "work": "Work",
+    "personal": "Personal",
+    "social": "Social",
+    "hobby": "Hobby",
+    "general": "General",
+    "addCustom": "Add Custom",
+    "customPlaceholder": "Category name",
+    "nameRequired": "Enter category name"
   },
   "common": {
     "save": "Save",
@@ -217,5 +238,33 @@
     "showMonth": "Show Month",
     "dragUpForMonth": "Drag up for month view",
     "dragDownForWeek": "Drag down for week view"
+  },
+  "common": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "ok": "OK",
+    "close": "Close",
+    "select": "Select",
+    "confirm": "Confirm",
+    "enabled": "Enabled",
+    "disabled": "Disabled",
+    "granted": "Granted",
+    "denied": "Denied"
+  },
+  "days": {
+    "monday": "Monday",
+    "tuesday": "Tuesday",
+    "wednesday": "Wednesday",
+    "thursday": "Thursday",
+    "friday": "Friday",
+    "saturday": "Saturday",
+    "sunday": "Sunday",
+    "mon": "Mon",
+    "tue": "Tue",
+    "wed": "Wed",
+    "thu": "Thu",
+    "fri": "Fri",
+    "sat": "Sat",
+    "sun": "Sun"
   }
 }

@@ -15,11 +15,9 @@ const getSystemTheme = (): 'light' | 'dark' => {
 export interface SettingsState {
   language: Language;
   theme: Theme;
-  notifications: boolean;
   visualEffects: boolean;
   setLanguage: (language: Language) => void;
   setTheme: (theme: Theme) => void;
-  setNotifications: (enabled: boolean) => void;
   setVisualEffects: (enabled: boolean) => void;
   getCurrentTheme: () => 'light' | 'dark';
 }
@@ -29,7 +27,6 @@ export const useSettingsStore = create<SettingsState>()(
     (set, get) => ({
       language: getDefaultLang() as Language,
       theme: 'system', // По умолчанию используем системную тему
-      notifications: true,
       visualEffects: true, // По умолчанию включены визуальные эффекты
       setLanguage: (language: Language) => {
         i18n.changeLanguage(language);
@@ -39,9 +36,6 @@ export const useSettingsStore = create<SettingsState>()(
         console.log('SettingsStore: setTheme called with:', theme);
         set({ theme });
         console.log('SettingsStore: theme state updated to:', theme);
-      },
-      setNotifications: (notifications: boolean) => {
-        set({ notifications });
       },
       setVisualEffects: (visualEffects: boolean) => {
         set({ visualEffects });

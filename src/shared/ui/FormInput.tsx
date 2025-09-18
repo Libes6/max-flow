@@ -12,12 +12,14 @@ interface FormInputProps extends TextInputProps {
   label?: string;
   error?: string;
   isPassword?: boolean;
+  required?: boolean;
 }
 
 export const FormInput: React.FC<FormInputProps> = ({
   label,
   error,
   isPassword = false,
+  required = false,
   style,
   ...props
 }) => {
@@ -28,6 +30,7 @@ export const FormInput: React.FC<FormInputProps> = ({
       {label && (
         <Text style={[styles.label, { color: colors.text }]}>
           {label}
+          {required && <Text style={{ color: colors.error }}> *</Text>}
         </Text>
       )}
       <TextInput

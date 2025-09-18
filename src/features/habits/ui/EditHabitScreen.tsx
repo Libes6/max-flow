@@ -7,6 +7,7 @@ import { HabitsStackParamList } from '../../../app/navigation/types';
 import { useTheme, spacing } from '../../../shared/theme';
 import { FormInput } from '../../../shared/ui/FormInput';
 import { Button } from '../../../shared/ui/Button';
+import { PrioritySelector, type Priority, CategorySelector } from '../../../shared/ui';
 import { useHabitsStore } from '../model/useHabitsStore';
 
 export const EditHabitScreen: React.FC = () => {
@@ -20,17 +21,19 @@ export const EditHabitScreen: React.FC = () => {
 
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
-  const [category, setCategory] = useState('');
+  const [category, setCategory] = useState('general');
   const [selectedColor, setSelectedColor] = useState('#3B82F6');
   const [selectedIcon, setSelectedIcon] = useState('fitness');
+  const [priority, setPriority] = useState<Priority>('medium');
 
   useEffect(() => {
     if (habit) {
       setName(habit.name);
       setDescription(habit.description || '');
-      setCategory(habit.category || '');
+      setCategory(habit.category || 'general');
       setSelectedColor(habit.color || '#3B82F6');
       setSelectedIcon(habit.icon || 'fitness');
+      setPriority(habit.priority || 'medium');
     }
   }, [habit]);
 
@@ -48,6 +51,7 @@ export const EditHabitScreen: React.FC = () => {
       category: category.trim(),
       color: selectedColor,
       icon: selectedIcon,
+      priority,
     });
 
     navigation.goBack();
@@ -87,7 +91,7 @@ export const EditHabitScreen: React.FC = () => {
   }
 
   return (
-    <View style={[styles.container, { backgroundColor: colors.background }]}>
+    <SafeAreaView style={[styles.container, { backgroundColor: colors.background }]}>
       <ScrollView 
         style={styles.scrollView}
         contentContainerStyle={styles.scrollContent}
@@ -112,11 +116,14 @@ export const EditHabitScreen: React.FC = () => {
             numberOfLines={3}
           />
 
-          <FormInput
-            label={t('habits.habitCategory')}
-            value={category}
-            onChangeText={setCategory}
-            placeholder={t('habits.habitCategoryPlaceholder')}
+          <CategorySelector
+            selectedCategory={category}
+            onCategoryChange={setCategory}
+          />
+
+          <PrioritySelector
+            selectedPriority={priority}
+            onPriorityChange={setPriority}
           />
 
           <Button
@@ -141,7 +148,7 @@ export const EditHabitScreen: React.FC = () => {
           </View>
         </View>
       </ScrollView>
-    </View>
+    </SafeAreaView>
   );
 };
 
@@ -154,7 +161,7 @@ const styles = StyleSheet.create({
   },
   scrollContent: {
     padding: spacing.lg,
-    paddingBottom: spacing.xl,
+    paddingBottom: spacing.xxl * 2, // Увеличиваем отступ снизу
   },
   form: {
     gap: spacing.md,
@@ -165,7 +172,8 @@ const styles = StyleSheet.create({
   buttonRow: {
     flexDirection: 'row',
     gap: spacing.md,
-    marginTop: spacing.md,
+    marginTop: spacing.lg, // Увеличиваем отступ сверху
+    marginBottom: spacing.lg, // Добавляем отступ снизу
   },
   deleteButton: {
     flex: 1,

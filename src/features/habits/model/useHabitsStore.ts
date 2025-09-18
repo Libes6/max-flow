@@ -8,6 +8,7 @@ import { generateUUID } from '../../../shared/lib/uuid';
 export interface HabitsState {
     habits: Habit[];
     currentUserId: string;
+    customCategories: string[];
     setUserId: (userId: string) => void;
     addHabit: (input: {
         name: string;
@@ -15,6 +16,7 @@ export interface HabitsState {
         category?: string;
         color?: string;
         icon?: string;
+        priority?: 'low' | 'medium' | 'high';
     }) => void;
     updateHabit: (habitId: string, input: {
         name?: string;
@@ -22,10 +24,13 @@ export interface HabitsState {
         category?: string;
         color?: string;
         icon?: string;
+        priority?: 'low' | 'medium' | 'high';
         isActive?: boolean;
     }) => void;
     removeHabit: (habitId: string) => void;
     clearHabits: () => void;
+    addCustomCategory: (category: string) => void;
+    getAvailableCategories: () => string[];
 }
 
 export const useHabitsStore = create<HabitsState>()(
@@ -33,10 +38,11 @@ export const useHabitsStore = create<HabitsState>()(
         (set, get) => ({
             habits: [],
             currentUserId: 'local',
+            customCategories: [],
             setUserId: (userId: string) => {
                 set({ currentUserId: userId });
             },
-            addHabit: ({ name, description, category, color, icon }) => {
+            addHabit: ({ name, description, category, color, icon, priority }) => {
                 const { currentUserId } = get();
                 const newHabit: Habit = {
                     id: generateUUID(),
@@ -49,6 +55,7 @@ export const useHabitsStore = create<HabitsState>()(
                     frequency: 'daily',
                     target: undefined,
                     unit: undefined,
+                    priority: priority || 'medium',
                     isActive: true,
                     createdAt: new Date(),
                     updatedAt: new Date(),
@@ -85,13 +92,30 @@ export const useHabitsStore = create<HabitsState>()(
             clearHabits: () => {
                 set({ habits: [] });
             },
+            addCustomCategory: (category: string) => {
+                const { customCategories } = get();
+                const trimmedCategory = category.trim();
+                
+                if (trimmedCategory && !customCategories.includes(trimmedCategory)) {
+                    set({ customCategories: [...customCategories, trimmedCategory] });
+                }
+            },
+            getAvailableCategories: () => {
+                const { customCategories } = get();
+                const predefinedCategories = [
+                    'health', 'fitness', 'learning', 'work', 
+                    'personal', 'social', 'hobby', 'general'
+                ];
+                return [...predefinedCategories, ...customCategories];
+            },
         }),
         {
             name: 'habits-store',
             storage: createJSONStorage(() => mmkvStorageAdapter),
             partialize: (state) => ({ 
                 habits: state.habits,
-                currentUserId: state.currentUserId 
+                currentUserId: state.currentUserId,
+                customCategories: state.customCategories
             }),
         }
     )

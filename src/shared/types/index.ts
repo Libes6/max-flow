@@ -11,7 +11,6 @@ export interface User {
 
 export interface UserSettings {
   theme: 'light' | 'dark';
-  notifications: boolean;
   language: 'ru' | 'en' | 'uk' | 'kk';
 }
 
@@ -26,6 +25,7 @@ export interface Habit {
   frequency: 'daily' | 'weekly' | 'monthly';
   target?: number;
   unit?: string;
+  priority: 'low' | 'medium' | 'high';
   isActive: boolean;
   createdAt: Date;
   updatedAt: Date;
@@ -69,3 +69,4 @@ export interface Streak {
   lastEntryDate: Date;
   updatedAt: Date;
 }
+

@@ -9,6 +9,8 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from '@react-navigation/native';
+import type { NavigationProp } from '@react-navigation/native';
+import type { RootStackParamList } from '../../../app/navigation/types';
 import { useTranslation } from 'react-i18next';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useTheme, spacing, typography } from '../../../shared/theme';
@@ -16,6 +18,7 @@ import { useAuth } from '../../auth/model/useAuth';
 import { useProfileStore } from '../model/useProfileStore';
 import { LanguageSelector } from '../../settings/ui/LanguageSelector';
 import { ThemeSelector } from '../../settings/ui/ThemeSelector';
+import { NotificationSettingsScreen } from '../../settings/ui/NotificationSettingsScreen';
 import { useNavigationContext } from '../../../app/providers/NavigationProvider';
 import { useLocalBottomSheet } from '../../../shared/lib';
 import { BottomSheet } from '../../../shared/ui';
@@ -24,20 +27,20 @@ import { useSettingsStore } from '../../../shared/lib/stores/useSettingsStore';
 const ProfileHeader: React.FC = () => {
   const { t } = useTranslation();
   const { colors } = useTheme();
-  const navigation = useNavigation();
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const { user, isAuthenticated, session, isLoading, refreshAuth } = useAuth();
   const { profile, loading: profileLoading, initialized } = useProfileStore();
   const { isGuestMode, setGuestMode } = useNavigationContext();
 
   const handleAuthPress = () => {
     if (isAuthenticated) {
-      navigation.navigate('EditProfile' as never);
+      navigation.navigate('EditProfile');
     } else if (isGuestMode) {
       // В гостевом режиме - выходим из него и переходим к авторизации
       setGuestMode(false);
-      navigation.navigate('Auth' as never);
+      navigation.navigate('Auth');
     } else {
-      navigation.navigate('Auth' as never);
+      navigation.navigate('Auth');
     }
   };
 
@@ -147,6 +150,7 @@ export const ProfileScreen: React.FC = () => {
   const { t } = useTranslation();
   const { colors } = useTheme();
   const { user } = useAuth();
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const {
     isVisible,
     title,
@@ -160,6 +164,7 @@ export const ProfileScreen: React.FC = () => {
   
   // Получаем актуальную тему (учитывая системную)
   const currentTheme = getCurrentTheme();
+
 
   // Обработчики для языка и темы
   const handleLanguagePress = () => {
@@ -296,6 +301,14 @@ export const ProfileScreen: React.FC = () => {
     setVisualEffects(!visualEffects);
   };
 
+  const handleNotificationSettingsPress = () => {
+    navigation.navigate('NotificationSettings');
+  };
+
+
+
+
+
 
 
 
@@ -327,15 +340,16 @@ export const ProfileScreen: React.FC = () => {
             onPress={handleThemePress}
           />
           <SettingItem
-            title={t('profile.notifications')}
-            subtitle={t('profile.notificationsSubtitle')}
-            icon="notifications-outline"
-          />
-          <SettingItem
             title={t('profile.visualEffects')}
             subtitle={visualEffects ? t('common.enabled') : t('common.disabled')}
             icon="sparkles-outline"
             onPress={handleVisualEffectsPress}
+          />
+          <SettingItem
+            title={t('settings.notifications')}
+            subtitle={t('settings.notificationsSubtitle')}
+            icon="notifications-outline"
+            onPress={handleNotificationSettingsPress}
           />
           <SettingItem
             title={t('profile.version')}
