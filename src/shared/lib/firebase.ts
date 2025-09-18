@@ -2,23 +2,28 @@ import { initializeApp, getApps } from '@react-native-firebase/app';
 import messaging from '@react-native-firebase/messaging';
 import { Alert, Platform } from 'react-native';
 
-// Firebase конфигурация
-const firebaseConfig = {
-  apiKey: "AIzaSyAx9bS5wZ7ryuV73gcWKDbUu8-ZyRlJx6M",
-  authDomain: "flow-max-6c2ac.firebaseapp.com",
-  projectId: "flow-max-6c2ac",
-  storageBucket: "flow-max-6c2ac.firebasestorage.app",
-  messagingSenderId: "693657338765",
-  appId: "1:693657338765:android:ede6d1967430862101b3c4"
-};
+// Firebase конфигурация (будет загружена из google-services.json)
+// const firebaseConfig = {
+//   apiKey: "AIzaSyAx9bS5wZ7ryuV73gcWKDbUu8-ZyRlJx6M",
+//   authDomain: "flow-max-6c2ac.firebaseapp.com",
+//   projectId: "flow-max-6c2ac",
+//   storageBucket: "flow-max-6c2ac.firebasestorage.app",
+//   messagingSenderId: "693657338765",
+//   appId: "1:693657338765:android:ede6d1967430862101b3c4"
+// };
 
-// Инициализация Firebase
+// Инициализация Firebase (конфигурация загружается из google-services.json)
 if (getApps().length === 0) {
-  initializeApp(firebaseConfig);
+  console.log('🔥 Firebase: Инициализируем Firebase...');
+  initializeApp();
+  console.log('🔥 Firebase: Firebase инициализирован');
+} else {
+  console.log('🔥 Firebase: Firebase уже инициализирован');
 }
 
 // Firebase Messaging
 export const firebaseMessaging = messaging();
+console.log('🔥 Firebase: Messaging инициализирован');
 
 // Получение FCM токена
 export const getFCMToken = async (): Promise<string | null> => {
