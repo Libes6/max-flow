@@ -1,7 +1,6 @@
 import PushNotification from 'react-native-push-notification';
 import { Platform } from 'react-native';
 import { mmkvStorageAdapter } from '../mmkv';
-import { supabase } from '../supabase';
 import { getFCMToken, setupBackgroundMessageHandler, setupForegroundMessageHandler } from '../firebase';
 import { requestExactAlarmPermission, checkAllPermissions } from '../permissions';
 
@@ -42,7 +41,6 @@ class NotificationService {
     if (fcmToken) {
       this.pushToken = fcmToken;
       mmkvStorageAdapter.setItem('push_token', fcmToken);
-      await this.updateServerToken(fcmToken);
     }
 
     PushNotification.configure({
@@ -52,9 +50,6 @@ class NotificationService {
         
         // Сохраняем токен в MMKV
         mmkvStorageAdapter.setItem('push_token', token.token);
-        
-        // Отправляем токен на сервер
-        await this.updateServerToken(token.token);
       },
 
       onNotification: (notification) => {
@@ -124,24 +119,6 @@ class NotificationService {
     });
   }
 
-  async updateServerToken(token: string): Promise<void> {
-    try {
-        const { error } = await supabase
-        .from('user_tokens')
-        .upsert({
-          user_id: mmkvStorageAdapter.getItem('user_id'),
-          push_token: token,
-          platform: Platform.OS,
-          updated_at: new Date().toISOString(),
-        });
-
-      if (error) {
-        console.error('Failed to update server token:', error);
-      }
-    } catch (error) {
-      console.error('Error updating server token:', error);
-    }
-  }
 
   async scheduleNotification(notification: Omit<NotificationData, 'id' | 'scheduled'>): Promise<string> {
     const id = `${notification.type}_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
@@ -411,27 +388,6 @@ class NotificationService {
     return mmkvStorageAdapter.getItem('push_token');
   }
 
-  async sendNotificationToServer(notification: {
-    title: string;
-    message: string;
-    userId: string;
-    type: string;
-    habitId?: string;
-  }): Promise<void> {
-    try {
-      const { error } = await supabase.functions.invoke('send-notification', {
-        body: notification,
-      });
-
-      if (error) {
-        console.error('Failed to send notification to server:', error);
-        throw error;
-      }
-    } catch (error) {
-      console.error('Error sending notification to server:', error);
-      throw error;
-    }
-  }
 
   private handleNotificationPress(notification: any): void {
     const { habitId, type } = notification.userInfo || {};

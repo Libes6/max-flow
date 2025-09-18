@@ -76,15 +76,6 @@ export const useNotifications = () => {
     return notificationService.getToken();
   }, []);
 
-  const sendNotificationToServer = useCallback(async (notification: {
-    title: string;
-    message: string;
-    userId: string;
-    type: string;
-    habitId?: string;
-  }) => {
-    return notificationService.sendNotificationToServer(notification);
-  }, []);
 
   const scheduleHabitRemindersForAllHabits = useCallback(async (): Promise<void> => {
     if (!permissions) {
@@ -108,7 +99,6 @@ export const useNotifications = () => {
     cancelAllNotifications,
     updateSettings,
     getToken,
-    sendNotificationToServer,
     refreshNotifications: loadScheduledNotifications,
   };
 };
